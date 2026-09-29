@@ -3,160 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1BAC EX A — Dashboard Class</title>
+  <title>PDC — 1BAC EX A Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary-color: #0072e5;
-      --primary-glow: rgba(0, 114, 229, 0.4);
-      --bg-color: #070c16;
-      --card-bg: rgba(13, 22, 38, 0.85);
-      --card-border: rgba(0, 114, 229, 0.25);
-      --text-color: #f1f5f9;
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.35);
+      --bg-color: #0b1329;
+      --card-bg: rgba(18, 28, 51, 0.82);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-hover: rgba(37, 99, 235, 0.4);
+      --text-color: #f8fafc;
       --text-muted: #94a3b8;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
       --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; padding-bottom: 60px; overflow-x: hidden; transition: background-color 0.3s ease; }
+    body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; padding-bottom: 70px; overflow-x: hidden; }
 
     /* Header & Navigation */
     header {
-      background: linear-gradient(180deg, rgba(8, 16, 32, 0.95) 0%, rgba(7, 12, 22, 0.85) 100%);
-      backdrop-filter: blur(16px);
+      background: rgba(11, 19, 41, 0.92);
+      backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--card-border);
       position: sticky; top: 0; z-index: 100; padding: 1rem 1.5rem;
-      box-shadow: 0 4px 25px var(--primary-glow);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     }
     .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     
-    .logo-group h1 { 
-      font-size: 1.6rem; 
-      font-weight: 800; 
-      color: var(--primary-color);
-      letter-spacing: -0.5px;
-      text-shadow: 0 0 12px var(--primary-glow);
-    }
-    .logo-group p { font-size: 0.85rem; color: var(--text-muted); }
-    
-    .nav-tabs { display: flex; gap: 0.4rem; background: rgba(255, 255, 255, 0.03); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
-    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
-    .tab-btn.active, .tab-btn:hover { background: var(--primary-color); color: #fff; box-shadow: 0 0 16px var(--primary-glow); }
+    .brand-group { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-badge { background: var(--primary-color); color: #fff; font-weight: 800; padding: 0.4rem 0.75rem; border-radius: 10px; font-size: 0.9rem; box-shadow: 0 0 15px var(--primary-glow); }
+    .brand-title h1 { font-size: 1.35rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+    .brand-title p { font-size: 0.78rem; color: var(--text-muted); }
 
-    .admin-badge {
-      display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.4rem 0.85rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s ease;
-    }
-    .admin-badge.active-mode {
-      background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7;
-    }
+    .nav-tabs { display: flex; gap: 0.35rem; background: rgba(0, 0, 0, 0.3); padding: 0.35rem; border-radius: 14px; border: 1px solid var(--card-border); overflow-x: auto; max-width: 100%; }
+    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.55rem 0.95rem; font-size: 0.82rem; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; }
+    .tab-btn.active, .tab-btn:hover { background: var(--primary-color); color: #fff; box-shadow: 0 0 18px var(--primary-glow); }
 
-    /* Main Container */
-    main { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+    .group-selector { display: flex; align-items: center; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); border-radius: 10px; padding: 0.2rem; }
+    .group-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.35rem 0.65rem; font-size: 0.75rem; font-weight: 700; border-radius: 7px; cursor: pointer; transition: 0.2s ease; }
+    .group-btn.active { background: var(--primary-color); color: #fff; }
 
-    /* Sections */
+    .admin-pill {
+      display: flex; align-items: center; gap: 0.4rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.45rem 0.85rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: 0.2s ease;
+    }
+    .admin-pill.active-mode { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7; }
+
+    /* Main Grid */
+    main { max-width: 1200px; margin: 1.75rem auto; padding: 0 1.25rem; }
+
+    /* Quick Stats Bar */
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 1rem 1.25rem; backdrop-filter: blur(12px); display: flex; align-items: center; gap: 1rem; }
+    .stat-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(37, 99, 235, 0.15); color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border: 1px solid var(--card-border-hover); }
+    .stat-info h4 { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-info p { font-size: 1.1rem; font-weight: 800; color: #fff; margin-top: 0.1rem; }
+
+    /* Pages */
     .section-page { display: none; }
-    .section-page.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .section-page.active { display: block; animation: pageFade 0.25s ease-out; }
+    @keyframes pageFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Cards */
-    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
-    .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(14px); margin-bottom: 1.5rem; }
+    .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
 
-    /* Buttons & Inputs */
-    .btn { background: var(--primary-color); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px var(--primary-glow); }
-    .btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 6px 18px var(--primary-glow); }
-    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-color); box-shadow: none; border: 1px solid var(--card-border); }
-    .btn-danger { background: var(--danger); box-shadow: none; }
-    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    /* Buttons & Controls */
+    .btn { background: var(--primary-color); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px var(--primary-glow); }
+    .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255,255,255,0.06); color: var(--text-color); box-shadow: none; border: 1px solid var(--card-border); }
+    .btn-danger { background: var(--accent-red); box-shadow: none; }
+    .btn-sm { padding: 0.35rem 0.65rem; font-size: 0.75rem; border-radius: 7px; }
 
-    input, select, textarea { width: 100%; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border); color: var(--text-color); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; transition: 0.2s ease; }
-    input:focus, select:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 10px var(--primary-glow); }
+    input, select, textarea { width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); color: var(--text-color); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; font-size: 0.88rem; transition: 0.2s ease; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 12px var(--primary-glow); }
 
-    /* Custom Color Pickers */
-    .color-picker-group { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.25); padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 0.75rem; }
-    .color-picker-group input[type="color"] { width: 40px; height: 35px; padding: 0; margin-bottom: 0; border: none; cursor: pointer; background: transparent; }
+    /* Badges */
+    .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+    .badge-maths { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.4); }
+    .badge-pc { background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4); }
+    .badge-svt { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-fr { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-ar { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4); }
+    .badge-general { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
 
-    /* Subject Badges */
-    .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-    .badge-maths { background: rgba(0, 114, 229, 0.2); color: #60a5fa; border: 1px solid rgba(0, 114, 229, 0.4); }
-    .badge-pc { background: #8b5cf620; color: #a78bfa; border: 1px solid #8b5cf640; }
-    .badge-svt { background: #10b98120; color: #34d399; border: 1px solid #10b98140; }
-    .badge-fr { background: #f59e0b20; color: #fbbf24; border: 1px solid #f59e0b40; }
-    .badge-ar { background: #ec489920; color: #f472b6; border: 1px solid #ec489940; }
-    .badge-general { background: #64748b20; color: #94a3b8; border: 1px solid #64748b40; }
-
-    /* Devoirs Grid */
-    .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.25rem; }
-    .devoir-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.25rem; position: relative; transition: 0.2s ease; }
-    .devoir-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
-    .devoir-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
-    .devoir-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
-    .devoir-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
+    /* Grid Displays */
+    .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.2rem; }
+    .devoir-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; transition: 0.2s ease; position: relative; }
+    .devoir-card:hover { border-color: var(--card-border-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+    .devoir-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+    .devoir-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; color: #fff; }
+    .devoir-countdown { font-size: 0.75rem; font-weight: 700; color: var(--accent-amber); background: rgba(245, 158, 11, 0.12); padding: 0.2rem 0.5rem; border-radius: 6px; }
 
     /* Timetable Grid */
     .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
-    .day-column { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
-    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--primary-color); }
-    .slot-item { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.85rem; position: relative; }
-    .slot-time { font-weight: 700; color: var(--primary-color); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
-    .slot-teacher { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.2rem; }
+    .day-card { background: rgba(0, 0, 0, 0.25); border: 1px solid var(--card-border); border-radius: 14px; padding: 1rem; transition: 0.2s ease; }
+    .day-card.today { border-color: var(--primary-color); box-shadow: 0 0 20px var(--primary-glow); }
+    .day-header { text-align: center; font-weight: 800; font-size: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--card-border); margin-bottom: 0.8rem; color: var(--primary-color); }
+    .slot-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 0.75rem; margin-bottom: 0.6rem; font-size: 0.85rem; }
+    .slot-time { font-size: 0.72rem; font-weight: 800; color: var(--primary-color); display: block; margin-bottom: 0.2rem; }
+    .slot-prof { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.25rem; }
 
-    /* Posts & Annonces */
-    .post-item { background: rgba(0, 0, 0, 0.25); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
-    .post-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+    /* Forum & Annonces */
+    .feed-card { background: rgba(0,0,0,0.25); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; }
+    .feed-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
 
     /* Modals */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #0c1527; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 520px; padding: 1.5rem; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto; }
+    .modal { background: #0f1931; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 520px; padding: 1.6rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
+
+    /* Color Customizer Inputs */
+    .color-row { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+    .color-row input[type="color"] { width: 42px; height: 36px; padding: 0; margin-bottom: 0; border: none; background: transparent; cursor: pointer; }
 
     footer { text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 3rem; }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Header Navbar -->
   <header>
     <div class="nav-container">
-      <div class="logo-group">
-        <h1 id="siteClassTitle">1BAC EX A</h1>
-        <p id="siteSubtitle">EDT SEM1 - Perd1 (à partir du 21 Sept 2026)</p>
+      <div class="brand-group">
+        <div class="brand-badge" id="siteClassBadge">1BAC EX A</div>
+        <div class="brand-title">
+          <h1 id="siteMainTitle">Plateforme Délégué de Classe</h1>
+          <p id="siteSubtitle">EDT Semestre 1 — Lycée Rabat (2026-2027)</p>
+        </div>
       </div>
 
       <nav class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('devoirs')">📝 Devoirs</button>
-        <button class="tab-btn" onclick="switchTab('emploi')">📅 Emploi du temps</button>
-        <button class="tab-btn" onclick="switchTab('annonces')">📢 Annonces</button>
-        <button class="tab-btn" onclick="switchTab('forum')">💬 Forum</button>
-        <button class="tab-btn" onclick="switchTab('proverbes')">📜 Ordre Passage</button>
-        <button class="tab-btn" onclick="switchTab('ai')">🤖 Hassan AI</button>
-        <button class="tab-btn admin-only" style="display:none;" onclick="switchTab('settings')">⚙️ Personnaliser</button>
+        <button class="tab-btn active" onclick="switchTab('devoirs', this)">📝 Devoirs</button>
+        <button class="tab-btn" onclick="switchTab('emploi', this)">📅 Emploi du temps</button>
+        <button class="tab-btn" onclick="switchTab('annonces', this)">📢 Annonces</button>
+        <button class="tab-btn" onclick="switchTab('proverbes', this)">📜 Ordre Passage</button>
+        <button class="tab-btn" onclick="switchTab('forum', this)">💬 Forum</button>
+        <button class="tab-btn" onclick="switchTab('ai', this)">🤖 Hassan AI</button>
+        <button class="tab-btn admin-only" style="display:none;" onclick="switchTab('settings', this)">⚙️ Personnaliser</button>
       </nav>
 
-      <div class="admin-badge" id="adminToggleBtn" onclick="toggleAdminLogin()">
-        ⚙️ Mode Délégué
+      <div style="display: flex; gap: 0.6rem; align-items: center;">
+        <div class="group-selector">
+          <button class="group-btn active" onclick="setGroupFilter('ALL', this)">TOUT</button>
+          <button class="group-btn" onclick="setGroupFilter('Gr. A', this)">GR. A</button>
+          <button class="group-btn" onclick="setGroupFilter('Gr. B', this)">GR. B</button>
+        </div>
+        <div class="admin-pill" id="adminToggleBtn" onclick="toggleAdminLogin()">
+          🔒 Mode Délégué
+        </div>
       </div>
     </div>
   </header>
 
   <main>
 
-    <!-- SECTION: DEVOIRS -->
+    <!-- Quick Stats Header -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-info">
+          <h4>Devoirs à venir</h4>
+          <p id="statDevoirsCount">0 devoir(s)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📢</div>
+        <div class="stat-info">
+          <h4>Annonces Actives</h4>
+          <p id="statAnnoncesCount">0 annonce(s)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <h4>Aujourd'hui</h4>
+          <p id="statTodayName">Chargement...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: DEVOIRS -->
     <section id="devoirs" class="section-page active">
       <div class="card">
         <div class="card-title">
-          <span>Planning des Devoirs & Contrôles</span>
+          <span>Planning des Devoirs & Contrôles Continu</span>
           <button class="btn admin-only" style="display:none;" onclick="openModal('devoirModal')">+ Nouveau Devoir</button>
         </div>
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-          <input type="text" id="devoirSearch" placeholder="Rechercher un devoir ou matière..." onkeyup="renderDevoirs()" style="flex:1; margin-bottom:0;">
-          <select id="devoirFilter" onchange="renderDevoirs()" style="width: auto; margin-bottom:0;">
+        
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+          <input type="text" id="devoirSearch" placeholder="Rechercher par titre, leçon, matière..." onkeyup="renderDevoirs()" style="flex: 1; margin-bottom: 0;">
+          <select id="devoirFilter" onchange="renderDevoirs()" style="width: auto; margin-bottom: 0;">
             <option value="ALL">Toutes les matières</option>
             <option value="Maths">Mathématiques</option>
             <option value="PC">Physique-Chimie</option>
@@ -164,113 +208,124 @@
             <option value="Français">Français</option>
             <option value="Arabe">Arabe</option>
             <option value="Anglais">Anglais</option>
-            <option value="HG">Hist-Géo</option>
+            <option value="HG">Histoire-Géo</option>
             <option value="EI">Éduc Islamique</option>
             <option value="Philo">Philosophie</option>
           </select>
         </div>
+
         <div class="devoirs-grid" id="devoirsGrid"></div>
       </div>
     </section>
 
-    <!-- SECTION: EMPLOI DU TEMPS -->
+    <!-- SECTION 2: EMPLOI DU TEMPS -->
     <section id="emploi" class="section-page">
       <div class="card">
         <div class="card-title">
           <span>Emploi du Temps Officiel</span>
-          <button class="btn admin-only" style="display:none;" onclick="openModal('editTimetableModal')">✏️ Modifier l'Emploi</button>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('editTimetableModal')">✏️ Modifier un Créneau</button>
         </div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">
+          💡 Filtrez par <strong>Groupe A</strong> ou <strong>Groupe B</strong> en haut à droite pour voir les séances TP/TD spécifiques.
+        </p>
         <div class="timetable-grid" id="timetableGrid"></div>
       </div>
     </section>
 
-    <!-- SECTION: ANNONCES -->
+    <!-- SECTION 3: ANNONCES -->
     <section id="annonces" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Annonces Officielles</span>
-          <button class="btn admin-only" style="display:none;" onclick="openModal('annonceModal')">+ Nouvelle Annonce</button>
+          <span>Annonces Officielles du Délégué</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('annonceModal')">+ Publier Annonce</button>
         </div>
         <div id="annoncesList"></div>
       </div>
     </section>
 
-    <!-- SECTION: FORUM -->
-    <section id="forum" class="section-page">
-      <div class="card">
-        <div class="card-title">
-          <span>Critiques & Discussion Anonyme</span>
-          <button class="btn" onclick="openModal('forumModal')">✍️ Publier une critique</button>
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          Espace libre et respectueux pour donner votre avis sur le déroulement de la classe.
-        </p>
-        <div id="forumList"></div>
-      </div>
-    </section>
-
-    <!-- SECTION: PROVERBES & INFOS -->
+    <!-- SECTION 4: ORDRE DE PASSAGE (EXPOSÉS) -->
     <section id="proverbes" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Ordre de passage & Élèves</span>
+          <span>Ordre de Passage & Exposés (Élèves)</span>
           <button class="btn admin-only" style="display:none;" onclick="openModal('addStudentModal')">+ Ajouter Élève</button>
         </div>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.2rem;">
+          Ordre des présentations orales (Français - <em>La Boîte à Merveilles</em>, Hist-Géo, etc.).
+        </p>
+        <input type="text" id="studentSearchInput" placeholder="Chercher un élève..." onkeyup="renderStudents()" style="margin-bottom: 1rem;">
         <div id="proverbesList"></div>
       </div>
     </section>
 
-    <!-- SECTION: AI ASSISTANT -->
+    <!-- SECTION 5: FORUM -->
+    <section id="forum" class="section-page">
+      <div class="card">
+        <div class="card-title">
+          <span>Boîte à Idées & Discussion Anonyme</span>
+          <button class="btn" onclick="openModal('forumModal')">✍️ Publier une remarque</button>
+        </div>
+        <div id="forumList"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: HASSAN AI -->
     <section id="ai" class="section-page">
       <div class="card">
-        <div class="card-title">🤖 Assistant Hassan AI</div>
-        <div style="height: 320px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid var(--card-border); padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
-          <div style="background: rgba(0, 114, 229, 0.18); border: 1px solid var(--card-border); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
-            <strong>Hassan AI:</strong> Salam ! Je suis Hassan AI, l'assistant de votre classe. Posez-moi des questions sur vos cours, devoirs ou emploi du temps !
+        <div class="card-title">🤖 Assistant Virtual — Hassan AI</div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+          Posez n'importe quelle question sur vos professeurs, vos horaires de cours, les devoirs à venir ou l'organisation de la classe.
+        </p>
+        <div style="height: 350px; overflow-y: auto; background: rgba(0,0,0,0.35); border-radius: 12px; border: 1px solid var(--card-border); padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
+          <div style="background: rgba(37, 99, 235, 0.18); border: 1px solid var(--card-border-hover); padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.75rem; max-width: 82%;">
+            <strong>Hassan AI:</strong> Salam ! Je suis Hassan AI, l'assistant virtuel de la classe 1BAC EX A. Comment puis-je t'aider aujourd'hui ?
           </div>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <input type="text" id="chatInput" placeholder="Posez votre question à Hassan AI..." style="margin-bottom: 0;" onkeydown="if(event.key==='Enter') sendChatMessage()">
+        <div style="display: flex; gap: 0.6rem;">
+          <input type="text" id="chatInput" placeholder="Ex: Quel cours avons-nous Mardi à 10h30 ?" style="margin-bottom: 0;" onkeydown="if(event.key==='Enter') sendChatMessage()">
           <button class="btn" onclick="sendChatMessage()">Envoyer</button>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: LIVE CUSTOMIZER & SETTINGS (ADMIN ONLY) -->
+    <!-- SECTION 7: LIVE CUSTOMIZER & ADMIN PANEL -->
     <section id="settings" class="section-page">
       <div class="card">
-        <div class="card-title">🎨 Personnalisation Live du Site (Mode Délégué)</div>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          Modifiez directement les couleurs, le titre, les textes et le mot de passe sans toucher au code !
+        <div class="card-title">🎨 Personnalisation du Site (Panneau Délégué)</div>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+          Modifiez en direct les couleurs, le titre, les textes et le mot de passe sans aucune ligne de code !
         </p>
 
         <h3 style="margin-bottom: 0.75rem; color: var(--primary-color);">1. Identité du Site</h3>
-        <label style="font-size: 0.85rem; font-weight:600;">Titre de la Classe :</label>
-        <input type="text" id="settingTitleInput" placeholder="Ex: 1BAC EX A">
+        <label style="font-size:0.8rem; font-weight:700;">Badge Classe :</label>
+        <input type="text" id="settingBadgeInput" placeholder="Ex: 1BAC EX A">
 
-        <label style="font-size: 0.85rem; font-weight:600;">Sous-titre / Description :</label>
-        <input type="text" id="settingSubtitleInput" placeholder="Ex: EDT SEM1 - Perd1 (à partir du 21 Sept 2026)">
+        <label style="font-size:0.8rem; font-weight:700;">Titre Principal :</label>
+        <input type="text" id="settingTitleInput" placeholder="Ex: Plateforme Délégué de Classe">
 
-        <label style="font-size: 0.85rem; font-weight:600;">Texte du Pied de page (Footer) :</label>
-        <input type="text" id="settingFooterInput" placeholder="Ex: Cahier de textes & Planning — 1BAC EX A">
+        <label style="font-size:0.8rem; font-weight:700;">Sous-titre :</label>
+        <input type="text" id="settingSubtitleInput" placeholder="Ex: EDT Semestre 1 — Lycée Rabat">
 
-        <h3 style="margin-top: 1rem; margin-bottom: 0.75rem; color: var(--primary-color);">2. Thème & Couleurs</h3>
+        <label style="font-size:0.8rem; font-weight:700;">Pied de page (Footer) :</label>
+        <input type="text" id="settingFooterInput" placeholder="Ex: Plateforme Officielle 1BAC EX A">
+
+        <h3 style="margin-top: 1.25rem; margin-bottom: 0.75rem; color: var(--primary-color);">2. Couleurs & Appearance</h3>
         
-        <div class="color-picker-group">
-          <span>Couleur Principale (Accent & Boutons) :</span>
+        <div class="color-row">
+          <span>Couleur Principale (Accent) :</span>
           <input type="color" id="settingPrimaryColor" onchange="previewTheme()">
         </div>
 
-        <div class="color-picker-group">
-          <span>Couleur de Fond de la page :</span>
+        <div class="color-row">
+          <span>Couleur de Fond (Background) :</span>
           <input type="color" id="settingBgColor" onchange="previewTheme()">
         </div>
 
-        <h3 style="margin-top: 1rem; margin-bottom: 0.75rem; color: var(--primary-color);">3. Sécurité Délégué</h3>
-        <label style="font-size: 0.85rem; font-weight:600;">Nouveau Mot de Passe Délégué :</label>
-        <input type="password" id="settingPasswordInput" placeholder="Laissez vide pour conserver le mot de passe actuel">
+        <h3 style="margin-top: 1.25rem; margin-bottom: 0.75rem; color: var(--primary-color);">3. Sécurité Délégué</h3>
+        <label style="font-size:0.8rem; font-weight:700;">Nouveau Mot de Passe :</label>
+        <input type="password" id="settingPasswordInput" placeholder="Laisser vide pour ne pas modifier">
 
-        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;">
           <button class="btn" onclick="saveSiteSettings()">💾 Enregistrer les Modifications</button>
           <button class="btn btn-secondary" onclick="exportJSON()">📥 Exporter Données (JSON)</button>
           <button class="btn btn-secondary" onclick="triggerImportJSON()">📤 Importer Données (JSON)</button>
@@ -287,9 +342,11 @@
   <!-- Admin Login Modal -->
   <div class="modal-overlay" id="loginModal">
     <div class="modal">
-      <h3>Connexion Mode Délégué</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Mot de passe par défaut: <code>admin123</code></p>
-      <input type="password" id="adminPasswordInput" placeholder="Entrez le mot de passe..." onkeydown="if(event.key==='Enter') verifyAdminLogin()">
+      <h3 style="margin-bottom:0.5rem; color:#fff;">Connexion Mode Délégué</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Entrez le mot de passe délégué (Par défaut: <code>admin123</code>)
+      </p>
+      <input type="password" id="adminPasswordInput" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter') verifyAdminLogin()">
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('loginModal')">Annuler</button>
         <button class="btn" onclick="verifyAdminLogin()">Se connecter</button>
@@ -297,11 +354,11 @@
     </div>
   </div>
 
-  <!-- Add/Edit Devoir Modal -->
+  <!-- Add Devoir Modal -->
   <div class="modal-overlay" id="devoirModal">
     <div class="modal">
-      <h3>Ajouter un Devoir / Contrôle</h3>
-      <input type="text" id="devTitle" placeholder="Titre du devoir (ex: Contrôle N°1)">
+      <h3 style="margin-bottom:1rem; color:#fff;">Ajouter un Devoir / Contrôle</h3>
+      <input type="text" id="devTitle" placeholder="Titre (ex: Contrôle N°1 - Les Fonctions)">
       <select id="devSubject">
         <option value="Maths">Mathématiques</option>
         <option value="PC">Physique-Chimie</option>
@@ -309,12 +366,17 @@
         <option value="Français">Français</option>
         <option value="Arabe">Arabe</option>
         <option value="Anglais">Anglais</option>
-        <option value="HG">Hist-Géo</option>
+        <option value="HG">Histoire-Géo</option>
         <option value="EI">Éduc Islamique</option>
         <option value="Philo">Philosophie</option>
       </select>
+      <select id="devGroup">
+        <option value="Tous">Tous les élèves</option>
+        <option value="Gr. A">Groupe A uniquement</option>
+        <option value="Gr. B">Groupe B uniquement</option>
+      </select>
       <input type="date" id="devDate">
-      <textarea id="devDesc" placeholder="Description / Consignes..."></textarea>
+      <textarea id="devDesc" placeholder="Consignes / Chapitres à réviser..."></textarea>
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('devoirModal')">Annuler</button>
         <button class="btn" onclick="saveDevoir()">Enregistrer</button>
@@ -325,9 +387,9 @@
   <!-- Add Annonce Modal -->
   <div class="modal-overlay" id="annonceModal">
     <div class="modal">
-      <h3>Publier une Annonce</h3>
+      <h3 style="margin-bottom:1rem; color:#fff;">Publier une Annonce</h3>
       <input type="text" id="annTitle" placeholder="Titre de l'annonce">
-      <textarea id="annContent" placeholder="Contenu de l'annonce..."></textarea>
+      <textarea id="annContent" placeholder="Message aux élèves..."></textarea>
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('annonceModal')">Annuler</button>
         <button class="btn" onclick="saveAnnonce()">Publier</button>
@@ -338,30 +400,22 @@
   <!-- Edit Timetable Slot Modal -->
   <div class="modal-overlay" id="editTimetableModal">
     <div class="modal">
-      <h3>Modifier l'Emploi du Temps</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Sélectionnez un jour et modifiez un créneau :</p>
-      <select id="ttDaySelect" onchange="loadTTFormDay()">
+      <h3 style="margin-bottom:1rem; color:#fff;">Modifier l'Emploi du Temps</h3>
+      <select id="ttDaySelect">
         <option value="Lundi">Lundi</option>
         <option value="Mardi">Mardi</option>
         <option value="Mercredi">Mercredi</option>
         <option value="Jeudi">Jeudi</option>
         <option value="Vendredi">Vendredi</option>
       </select>
-      
-      <label style="font-size:0.8rem; font-weight:600;">Séance (Créneau) :</label>
       <select id="ttSlotPeriod">
-        <option value="1-2">Séance 1-2 (8h30 - 10h30)</option>
-        <option value="3-4">Séance 3-4 (10h30 - 12h30)</option>
-        <option value="5-6">Séance 5-6 (14h30 - 16h30)</option>
-        <option value="7-8">Séance 7-8 (16h30 - 18h30)</option>
+        <option value="1-2">Séance 1 (08h30 - 10h30)</option>
+        <option value="3-4">Séance 2 (10h30 - 12h30)</option>
+        <option value="5-6">Séance 3 (14h30 - 16h30)</option>
+        <option value="7-8">Séance 4 (16h30 - 18h30)</option>
       </select>
-
-      <label style="font-size:0.8rem; font-weight:600;">Matière(s) & Groupes :</label>
-      <input type="text" id="ttSubjectInput" placeholder="Ex: MATHS ou ANG (Gr. A) / EI (Gr. B)">
-
-      <label style="font-size:0.8rem; font-weight:600;">Professeur :</label>
-      <input type="text" id="ttTeacherInput" placeholder="Ex: M. BOUSSOF">
-
+      <input type="text" id="ttSubjectInput" placeholder="Matières / Groupes (ex: ANG (Gr. A) / EI (Gr. B))">
+      <input type="text" id="ttTeacherInput" placeholder="Nom du professeur (ex: M. BOUSSOF)">
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('editTimetableModal')">Annuler</button>
         <button class="btn" onclick="saveTimetableSlot()">Mettre à jour</button>
@@ -369,11 +423,11 @@
     </div>
   </div>
 
-  <!-- Add Forum Post Modal -->
+  <!-- Add Forum Modal -->
   <div class="modal-overlay" id="forumModal">
     <div class="modal">
-      <h3>Publier une critique anonyme</h3>
-      <textarea id="forumContent" placeholder="Exprimez votre opinion de manière respectueuse..."></textarea>
+      <h3 style="margin-bottom:1rem; color:#fff;">Publier une remarque anonyme</h3>
+      <textarea id="forumContent" placeholder="Écrivez votre message dans un esprit constructif..."></textarea>
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('forumModal')">Annuler</button>
         <button class="btn" onclick="saveForumPost()">Poster</button>
@@ -384,12 +438,13 @@
   <!-- Add Student Modal -->
   <div class="modal-overlay" id="addStudentModal">
     <div class="modal">
-      <h3>Ajouter un Élève à la liste</h3>
-      <input type="text" id="studentNameInput" placeholder="Nom de l'élève">
+      <h3 style="margin-bottom:1rem; color:#fff;">Ajouter un Élève (Ordre de Passage)</h3>
+      <input type="text" id="studentNameInput" placeholder="Nom complet de l'élève">
+      <input type="text" id="studentTopicInput" placeholder="Sujet / Roman (ex: La Boîte à Merveilles - Chap. 2)">
       <select id="studentStatusInput">
-        <option value="A faire">A faire</option>
-        <option value="Suivant">Suivant</option>
-        <option value="Fait">Fait</option>
+        <option value="À venir">À venir</option>
+        <option value="En cours">En cours</option>
+        <option value="Passé">Passé</option>
       </select>
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('addStudentModal')">Annuler</button>
@@ -399,95 +454,102 @@
   </div>
 
   <footer id="siteFooterText">
-    Cahier de textes & Planning — 1BAC EX A
+    Plateforme Officielle 1BAC EX A — Cahier de Textes & Planning Délégué
   </footer>
 
   <script>
-    // Initial Default Application State
+    // System Data & Local Storage
     const defaultData = {
       adminPassword: "admin123",
       isAdmin: false,
-      siteTitle: "1BAC EX A",
-      siteSubtitle: "EDT SEM1 - Perd1 (à partir du 21 Sept 2026)",
-      siteFooter: "Cahier de textes & Planning — 1BAC EX A",
-      primaryColor: "#0072e5",
-      bgColor: "#070c16",
+      selectedGroupFilter: "ALL",
+      siteClassBadge: "1BAC EX A",
+      siteMainTitle: "Plateforme Délégué de Classe",
+      siteSubtitle: "EDT Semestre 1 — Lycée Rabat (2026-2027)",
+      siteFooter: "Plateforme Officielle 1BAC EX A — Cahier de Textes & Planning Délégué",
+      primaryColor: "#2563eb",
+      bgColor: "#0b1329",
       devoirs: [
-        { id: 1, title: "Contrôle N°1 : Fonctions", subject: "Maths", date: "2026-10-08", desc: "M. BOUSSOF - Réviser le chapitre 1.", done: false }
+        { id: 1, title: "Contrôle N°1 : Généralités sur les Fonctions", subject: "Maths", group: "Tous", date: "2026-10-08", desc: "M. BOUSSOF — Réviser le domaine de définition, parité et monotonie." },
+        { id: 2, title: "TP Physique N°1 : Mesures de Tension", subject: "PC", group: "Gr. A", date: "2026-10-05", desc: "M. MAIZI — Préparer le compte rendu sur papier millimétré." }
       ],
       annonces: [
-        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel est disponible en ligne !", date: "2026-09-21" }
+        { id: 1, title: "Mise à jour officielle de l'Emploi du Temps", content: "L'emploi du temps complet du premier semestre est synchronisé pour les groupes A et B !", date: "2026-09-21" }
       ],
       forum: [],
       proverbes: [
-        { id: 1, name: "Élève 1", status: "Fait" },
-        { id: 2, name: "Élève 2", status: "Suivant" }
+        { id: 1, name: "Élève 1", topic: "La Boîte à Merveilles — Chapitre 1", status: "Passé" },
+        { id: 2, name: "Élève 2", topic: "La Boîte à Merveilles — Chapitre 2", status: "En cours" },
+        { id: 3, name: "Élève 3", topic: "La Boîte à Merveilles — Chapitre 3", status: "À venir" }
       ],
       emploi: {
         "Lundi": [
-          { period: "1-2", subject: "ANG (Gr. A) / EI (Gr. B)", teacher: "" },
-          { period: "3-4", subject: "FR", teacher: "Mme ETTAYBI" },
-          { period: "5-6", subject: "HG", teacher: "M. TOULIER" },
+          { period: "1-2", subject: "ANG (Gr. A) / EI (Gr. B)", teacher: "Mme BARGACH / M. AAZZAB" },
+          { period: "3-4", subject: "FRANÇAIS", teacher: "Mme ETTAYBI" },
+          { period: "5-6", subject: "HIST-GÉO", teacher: "M. TOULIER" },
           { period: "7-8", subject: "SVT", teacher: "M. FATH" }
         ],
         "Mardi": [
-          { period: "1-2", subject: "FR", teacher: "Mme ETTAYBI" },
-          { period: "3-4", subject: "PC", teacher: "M. MAIZI" },
-          { period: "5-6", subject: "ARB", teacher: "M. OUREZOUK" },
+          { period: "1-2", subject: "FRANÇAIS", teacher: "Mme ETTAYBI" },
+          { period: "3-4", subject: "PHYSIQUE-CHIMIE", teacher: "M. MAIZI" },
+          { period: "5-6", subject: "ARABE", teacher: "M. OUREZOUK" },
           { period: "7-8", subject: "MATHS", teacher: "M. BOUSSOF" }
         ],
         "Mercredi": [
           { period: "1-2", subject: "MATHS", teacher: "M. BOUSSOF" },
-          { period: "3-4", subject: "ANG", teacher: "Mme BARGACH" },
-          { period: "5-6", subject: "FR", teacher: "Mme ETTAYBI" },
-          { period: "7-8", subject: "PC", teacher: "M. MAIZI" }
+          { period: "3-4", subject: "ANGLAIS", teacher: "Mme BARGACH" },
+          { period: "5-6", subject: "FRANÇAIS", teacher: "Mme ETTAYBI" },
+          { period: "7-8", subject: "PHYSIQUE-CHIMIE", teacher: "M. MAIZI" }
         ],
         "Jeudi": [
-          { period: "1-2", subject: "ARB (Gr. A) / HG (Gr. B)", teacher: "" },
+          { period: "1-2", subject: "ARABE (Gr. A) / HG (Gr. B)", teacher: "M. OUREZOUK / M. TOULIER" },
           { period: "3-4", subject: "SVT", teacher: "M. FATH" },
-          { period: "5-6", subject: "PHILO", teacher: "M. FAZAZI" },
-          { period: "7-8", subject: "EPS", teacher: "EPS" }
+          { period: "5-6", subject: "PHILOSOPHIE", teacher: "M. FAZAZI" },
+          { period: "7-8", subject: "ÉDUCATION PHYSIQUE", teacher: "EPS" }
         ],
         "Vendredi": [
-          { period: "1-2", subject: "EI", teacher: "M. AAZZAB" },
+          { period: "1-2", subject: "ÉDUC ISLAMIQUE", teacher: "M. AAZZAB" },
           { period: "3-4", subject: "MATHS", teacher: "M. BOUSSOF" }
         ]
       }
     };
 
-    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v4')) || defaultData;
+    let appState = JSON.parse(localStorage.getItem('pdc_app_v5')) || defaultData;
 
     function saveState() {
-      localStorage.setItem('pdc_app_data_v4', JSON.stringify(appState));
+      localStorage.setItem('pdc_app_v5', JSON.stringify(appState));
     }
 
-    // Apply Live Custom Colors & Text
+    // Customization & Theme Renderer
     function applyThemeAndTexts() {
-      document.documentElement.style.setProperty('--primary-color', appState.primaryColor || "#0072e5");
-      document.documentElement.style.setProperty('--primary-glow', (appState.primaryColor || "#0072e5") + "66");
-      document.documentElement.style.setProperty('--bg-color', appState.bgColor || "#070c16");
+      document.documentElement.style.setProperty('--primary-color', appState.primaryColor || "#2563eb");
+      document.documentElement.style.setProperty('--primary-glow', (appState.primaryColor || "#2563eb") + "55");
+      document.documentElement.style.setProperty('--bg-color', appState.bgColor || "#0b1329");
 
-      document.getElementById('siteClassTitle').innerText = appState.siteTitle || "1BAC EX A";
+      document.getElementById('siteClassBadge').innerText = appState.siteClassBadge || "1BAC EX A";
+      document.getElementById('siteMainTitle').innerText = appState.siteMainTitle || "Plateforme Délégué de Classe";
       document.getElementById('siteSubtitle').innerText = appState.siteSubtitle || "";
       document.getElementById('siteFooterText').innerText = appState.siteFooter || "";
 
-      document.getElementById('settingTitleInput').value = appState.siteTitle || "";
+      document.getElementById('settingBadgeInput').value = appState.siteClassBadge || "";
+      document.getElementById('settingTitleInput').value = appState.siteMainTitle || "";
       document.getElementById('settingSubtitleInput').value = appState.siteSubtitle || "";
       document.getElementById('settingFooterInput').value = appState.siteFooter || "";
-      document.getElementById('settingPrimaryColor').value = appState.primaryColor || "#0072e5";
-      document.getElementById('settingBgColor').value = appState.bgColor || "#070c16";
+      document.getElementById('settingPrimaryColor').value = appState.primaryColor || "#2563eb";
+      document.getElementById('settingBgColor').value = appState.bgColor || "#0b1329";
     }
 
     function previewTheme() {
-      const primary = document.getElementById('settingPrimaryColor').value;
+      const p = document.getElementById('settingPrimaryColor').value;
       const bg = document.getElementById('settingBgColor').value;
-      document.documentElement.style.setProperty('--primary-color', primary);
-      document.documentElement.style.setProperty('--primary-glow', primary + "66");
+      document.documentElement.style.setProperty('--primary-color', p);
+      document.documentElement.style.setProperty('--primary-glow', p + "55");
       document.documentElement.style.setProperty('--bg-color', bg);
     }
 
     function saveSiteSettings() {
-      appState.siteTitle = document.getElementById('settingTitleInput').value;
+      appState.siteClassBadge = document.getElementById('settingBadgeInput').value;
+      appState.siteMainTitle = document.getElementById('settingTitleInput').value;
       appState.siteSubtitle = document.getElementById('settingSubtitleInput').value;
       appState.siteFooter = document.getElementById('settingFooterInput').value;
       appState.primaryColor = document.getElementById('settingPrimaryColor').value;
@@ -496,20 +558,29 @@
       const newPass = document.getElementById('settingPasswordInput').value.trim();
       if (newPass) {
         appState.adminPassword = newPass;
-        alert("Mot de passe Délégué mis à jour !");
+        alert("Mot de passe mis à jour avec succès !");
       }
 
       saveState();
       applyThemeAndTexts();
-      alert("Paramètres du site enregistrés !");
+      alert("Modifications du site enregistrées !");
     }
 
-    // Navigation Tab Switcher
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.section-page').forEach(page => page.classList.remove('active'));
-      
-      if(event && event.target) event.target.classList.add('active');
+    // Group Filtering
+    function setGroupFilter(group, btn) {
+      appState.selectedGroupFilter = group;
+      document.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderDevoirs();
+      renderTimetable();
+    }
+
+    // Navigation Tabs
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+
+      if (btn) btn.classList.add('active');
       document.getElementById(tabId).classList.add('active');
     }
 
@@ -517,7 +588,7 @@
     function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-    // Admin Mode & Login
+    // Admin Auth
     function toggleAdminLogin() {
       if (appState.isAdmin) {
         appState.isAdmin = false;
@@ -530,48 +601,61 @@
 
     function verifyAdminLogin() {
       const pass = document.getElementById('adminPasswordInput').value;
-      const requiredPass = appState.adminPassword || "admin123";
-      if (pass === requiredPass) {
+      const required = appState.adminPassword || "admin123";
+      if (pass === required) {
         appState.isAdmin = true;
         updateAdminUI();
         closeModal('loginModal');
-        alert("Connecté en tant que Délégué ! Vous pouvez tout modifier.");
+        alert("Connecté en Mode Délégué ! Vous avez accès à l'édition complète.");
       } else {
         alert("Mot de passe incorrect.");
       }
     }
 
     function updateAdminUI() {
-      const elements = document.querySelectorAll('.admin-only');
-      elements.forEach(el => el.style.display = appState.isAdmin ? 'inline-flex' : 'none');
+      document.querySelectorAll('.admin-only').forEach(el => el.style.display = appState.isAdmin ? 'inline-flex' : 'none');
       const btn = document.getElementById('adminToggleBtn');
       if (appState.isAdmin) {
         btn.innerText = "🔓 Mode Délégué (Actif)";
         btn.classList.add('active-mode');
       } else {
-        btn.innerText = "⚙️ Mode Délégué";
+        btn.innerText = "🔒 Mode Délégué";
         btn.classList.remove('active-mode');
       }
     }
 
-    // Render Devoirs
+    // Render Stats
+    function updateStats() {
+      document.getElementById('statDevoirsCount').innerText = `${appState.devoirs.length} devoir(s)`;
+      document.getElementById('statAnnoncesCount').innerText = `${appState.annonces.length} annonce(s)`;
+
+      const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+      const todayName = days[new Date().getDay()];
+      document.getElementById('statTodayName').innerText = todayName;
+    }
+
+    // Render Devoirs with Live Countdowns
     function renderDevoirs() {
       const grid = document.getElementById('devoirsGrid');
       const search = document.getElementById('devoirSearch').value.toLowerCase();
       const filter = document.getElementById('devoirFilter').value;
+      const currentGroup = appState.selectedGroupFilter;
 
       grid.innerHTML = "";
 
       const filtered = appState.devoirs.filter(d => {
         const matchesSearch = d.title.toLowerCase().includes(search) || d.desc.toLowerCase().includes(search);
         const matchesSubject = filter === "ALL" || d.subject === filter;
-        return matchesSearch && matchesSubject;
+        const matchesGroup = currentGroup === "ALL" || d.group === "Tous" || d.group === currentGroup;
+        return matchesSearch && matchesSubject && matchesGroup;
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<p style="color:var(--text-muted)">Aucun devoir trouvé.</p>`;
+        grid.innerHTML = `<p style="color:var(--text-muted); grid-column:1/-1;">Aucun devoir enregistré pour ces critères.</p>`;
         return;
       }
+
+      const today = new Date().toISOString().split('T')[0];
 
       filtered.forEach(d => {
         let badgeClass = "badge-general";
@@ -581,13 +665,17 @@
         else if (d.subject === "Français") badgeClass = "badge-fr";
         else if (d.subject === "Arabe") badgeClass = "badge-ar";
 
+        const diffDays = Math.ceil((new Date(d.date) - new Date(today)) / (1000 * 60 * 60 * 24));
+        let countdownText = diffDays > 0 ? `Dans ${diffDays} j` : (diffDays === 0 ? "Aujourd'hui !" : "Expiré");
+
         grid.innerHTML += `
           <div class="devoir-card">
-            <div class="devoir-header">
-              <span class="badge ${badgeClass}">${d.subject}</span>
-              <span class="devoir-date">📅 ${d.date}</span>
+            <div class="devoir-top">
+              <span class="badge ${badgeClass}">${d.subject} (${d.group})</span>
+              <span class="devoir-countdown">⏳ ${countdownText}</span>
             </div>
             <div class="devoir-title">${d.title}</div>
+            <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.75rem;">📅 Date limite: <strong>${d.date}</strong></div>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">${d.desc}</p>
             ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteDevoir(${d.id})">Supprimer</button>` : ''}
           </div>
@@ -598,14 +686,16 @@
     function saveDevoir() {
       const title = document.getElementById('devTitle').value;
       const subject = document.getElementById('devSubject').value;
+      const group = document.getElementById('devGroup').value;
       const date = document.getElementById('devDate').value;
       const desc = document.getElementById('devDesc').value;
 
-      if (!title || !date) return alert("Remplissez tous les champs obligatoires.");
+      if (!title || !date) return alert("Remplissez le titre et la date.");
 
-      appState.devoirs.push({ id: Date.now(), title, subject, date, desc, done: false });
+      appState.devoirs.push({ id: Date.now(), title, subject, group, date, desc });
       saveState();
       renderDevoirs();
+      updateStats();
       closeModal('devoirModal');
     }
 
@@ -613,24 +703,38 @@
       appState.devoirs = appState.devoirs.filter(d => d.id !== id);
       saveState();
       renderDevoirs();
+      updateStats();
     }
 
     // Render Timetable
     function renderTimetable() {
       const grid = document.getElementById('timetableGrid');
       grid.innerHTML = "";
+
+      const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+      const currentToday = days[new Date().getDay()];
+
       Object.keys(appState.emploi).forEach(day => {
-        let slotsHTML = appState.emploi[day].map(s => `
-          <div class="slot-item">
-            <span class="slot-time">Séance ${s.period}</span>
-            <strong>${s.subject}</strong>
-            ${s.teacher ? `<span class="slot-teacher">${s.teacher}</span>` : ''}
-          </div>
-        `).join('');
+        const isToday = (day === currentToday);
+        
+        let slotsHTML = appState.emploi[day].map(s => {
+          let periodLabel = "08h30 - 10h30";
+          if (s.period === "3-4") periodLabel = "10h30 - 12h30";
+          else if (s.period === "5-6") periodLabel = "14h30 - 16h30";
+          else if (s.period === "7-8") periodLabel = "16h30 - 18h30";
+
+          return `
+            <div class="slot-card">
+              <span class="slot-time">⏰ ${periodLabel}</span>
+              <strong>${s.subject}</strong>
+              ${s.teacher ? `<span class="slot-prof">👨‍🏫 ${s.teacher}</span>` : ''}
+            </div>
+          `;
+        }).join('');
 
         grid.innerHTML += `
-          <div class="day-column">
-            <div class="day-title">${day}</div>
+          <div class="day-card ${isToday ? 'today' : ''}">
+            <div class="day-header">${day} ${isToday ? ' (Aujourd\'hui)' : ''}</div>
             ${slotsHTML}
           </div>
         `;
@@ -643,37 +747,38 @@
       const subject = document.getElementById('ttSubjectInput').value;
       const teacher = document.getElementById('ttTeacherInput').value;
 
-      if (!subject) return alert("Veuillez entrer au moins une matière.");
+      if (!subject) return alert("Veuillez entrer une matière.");
 
-      const daySlots = appState.emploi[day] || [];
-      const existingIndex = daySlots.findIndex(s => s.period === period);
+      const slots = appState.emploi[day] || [];
+      const idx = slots.findIndex(s => s.period === period);
 
-      if (existingIndex >= 0) {
-        daySlots[existingIndex] = { period, subject, teacher };
+      if (idx >= 0) {
+        slots[idx] = { period, subject, teacher };
       } else {
-        daySlots.push({ period, subject, teacher });
+        slots.push({ period, subject, teacher });
       }
 
-      appState.emploi[day] = daySlots;
+      appState.emploi[day] = slots;
       saveState();
       renderTimetable();
       closeModal('editTimetableModal');
-      alert("Emploi du temps mis à jour !");
+      alert("Séance mise à jour dans l'emploi !");
     }
 
     // Render Annonces
     function renderAnnonces() {
       const list = document.getElementById('annoncesList');
       list.innerHTML = "";
+
       appState.annonces.forEach(a => {
         list.innerHTML += `
-          <div class="post-item">
-            <div class="post-meta">
-              <span>📢 Délégué</span>
+          <div class="feed-card">
+            <div class="feed-header">
+              <span>📌 Délégué de Classe</span>
               <span>${a.date}</span>
             </div>
-            <h4 style="margin-bottom:0.5rem;">${a.title}</h4>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.5rem;">${a.content}</p>
+            <h4 style="margin-bottom:0.4rem; color:#fff;">${a.title}</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:0.6rem;">${a.content}</p>
             ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteAnnonce(${a.id})">Supprimer</button>` : ''}
           </div>
         `;
@@ -683,11 +788,13 @@
     function saveAnnonce() {
       const title = document.getElementById('annTitle').value;
       const content = document.getElementById('annContent').value;
-      if (!title || !content) return alert("Champs vides.");
+
+      if (!title || !content) return alert("Remplissez tous les champs.");
 
       appState.annonces.unshift({ id: Date.now(), title, content, date: new Date().toISOString().split('T')[0] });
       saveState();
       renderAnnonces();
+      updateStats();
       closeModal('annonceModal');
     }
 
@@ -695,59 +802,30 @@
       appState.annonces = appState.annonces.filter(a => a.id !== id);
       saveState();
       renderAnnonces();
+      updateStats();
     }
 
-    // Render Forum
-    function renderForum() {
-      const list = document.getElementById('forumList');
-      list.innerHTML = "";
-      appState.forum.forEach(f => {
-        list.innerHTML += `
-          <div class="post-item">
-            <div class="post-meta">
-              <span>👤 Anonyme</span>
-              <span>${f.date}</span>
-            </div>
-            <p style="margin-bottom:0.75rem;">${f.content}</p>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <button class="btn btn-secondary btn-sm" onclick="likePost(${f.id})">👍 ${f.likes}</button>
-              ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteForumPost(${f.id})">Supprimer</button>` : ''}
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    function saveForumPost() {
-      const content = document.getElementById('forumContent').value;
-      if (!content) return;
-      appState.forum.unshift({ id: Date.now(), content, likes: 0, date: new Date().toISOString().split('T')[0] });
-      saveState();
-      renderForum();
-      closeModal('forumModal');
-    }
-
-    function likePost(id) {
-      const post = appState.forum.find(f => f.id === id);
-      if (post) { post.likes++; saveState(); renderForum(); }
-    }
-
-    function deleteForumPost(id) {
-      appState.forum = appState.forum.filter(f => f.id !== id);
-      saveState();
-      renderForum();
-    }
-
-    // Render Proverbes & Students
-    function renderProverbes() {
+    // Render Students / Exposés Tracker
+    function renderStudents() {
       const list = document.getElementById('proverbesList');
+      const search = document.getElementById('studentSearchInput').value.toLowerCase();
       list.innerHTML = "";
-      appState.proverbes.forEach(p => {
+
+      const filtered = appState.proverbes.filter(p => p.name.toLowerCase().includes(search) || p.topic.toLowerCase().includes(search));
+
+      filtered.forEach(p => {
+        let badgeColor = "badge-general";
+        if (p.status === "Passé") badgeColor = "badge-svt";
+        else if (p.status === "En cours") badgeColor = "badge-fr";
+
         list.innerHTML += `
-          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.25); border:1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem;">
-            <span>${p.name}</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.25); border:1px solid var(--card-border); padding:0.85rem 1rem; border-radius:12px; margin-bottom:0.6rem;">
+            <div>
+              <strong style="color:#fff; display:block; font-size:0.95rem;">${p.name}</strong>
+              <span style="font-size:0.78rem; color:var(--text-muted);">${p.topic}</span>
+            </div>
             <div style="display:flex; gap:0.5rem; align-items:center;">
-              <span class="badge ${p.status === 'Fait' ? 'badge-svt' : 'badge-fr'}">${p.status}</span>
+              <span class="badge ${badgeColor}">${p.status}</span>
               ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteStudent(${p.id})">✕</button>` : ''}
             </div>
           </div>
@@ -757,58 +835,106 @@
 
     function saveStudent() {
       const name = document.getElementById('studentNameInput').value;
+      const topic = document.getElementById('studentTopicInput').value;
       const status = document.getElementById('studentStatusInput').value;
+
       if (!name) return;
-      appState.proverbes.push({ id: Date.now(), name, status });
+
+      appState.proverbes.push({ id: Date.now(), name, topic, status });
       saveState();
-      renderProverbes();
+      renderStudents();
       closeModal('addStudentModal');
     }
 
     function deleteStudent(id) {
       appState.proverbes = appState.proverbes.filter(p => p.id !== id);
       saveState();
-      renderProverbes();
+      renderStudents();
+    }
+
+    // Render Forum
+    function renderForum() {
+      const list = document.getElementById('forumList');
+      list.innerHTML = "";
+
+      appState.forum.forEach(f => {
+        list.innerHTML += `
+          <div class="feed-card">
+            <div class="feed-header">
+              <span>👤 Élève Anonyme</span>
+              <span>${f.date}</span>
+            </div>
+            <p style="margin-bottom:0.75rem; font-size:0.9rem;">${f.content}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn btn-secondary btn-sm" onclick="likeForum(${f.id})">👍 ${f.likes}</button>
+              ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteForum(${f.id})">Supprimer</button>` : ''}
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function saveForumPost() {
+      const content = document.getElementById('forumContent').value;
+      if (!content) return;
+
+      appState.forum.unshift({ id: Date.now(), content, likes: 0, date: new Date().toISOString().split('T')[0] });
+      saveState();
+      renderForum();
+      closeModal('forumModal');
+    }
+
+    function likeForum(id) {
+      const post = appState.forum.find(f => f.id === id);
+      if (post) { post.likes++; saveState(); renderForum(); }
+    }
+
+    function deleteForum(id) {
+      appState.forum = appState.forum.filter(f => f.id !== id);
+      saveState();
+      renderForum();
     }
 
     // Hassan AI
     function sendChatMessage() {
       const input = document.getElementById('chatInput');
-      const windowEl = document.getElementById('chatWindow');
+      const chatWin = document.getElementById('chatWindow');
       if (!input.value.trim()) return;
 
-      const userText = input.value;
-      windowEl.innerHTML += `
-        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%; margin-left:auto; text-align:right;">
-          ${userText}
+      const text = input.value;
+      chatWin.innerHTML += `
+        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); padding:0.75rem 1rem; border-radius:12px; margin-bottom:0.75rem; max-width:82%; margin-left:auto; text-align:right;">
+          ${text}
         </div>
       `;
 
       setTimeout(() => {
-        let reply = `Je suis Hassan AI, l'assistant de ${appState.siteTitle || 'la classe'}. Consiltez l'emploi du temps ou les devoirs pour en savoir plus !`;
-        const q = userText.toLowerCase();
-        if (q.includes("math")) reply = "Les cours de Maths avec M. BOUSSOF ont lieu le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
-        else if (q.includes("svt")) reply = "Les cours de SVT avec M. FATH ont lieu le Lundi (7-8) et le Jeudi (3-4).";
-        else if (q.includes("pc") || q.includes("physique")) reply = "La Physique-Chimie avec M. MAIZI a lieu le Mardi (3-4) et Mercredi (7-8).";
-        else if (q.includes("français") || q.includes("francais")) reply = "Le Français avec Mme ETTAYBI a lieu le Lundi (3-4), Mardi (1-2) et Mercredi (5-6).";
-        
-        windowEl.innerHTML += `
-          <div style="background:rgba(0, 114, 229, 0.18); border: 1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%;">
+        let reply = "Je suis Hassan AI. N'hésite pas à consulter l'emploi du temps ou les devoirs pour plus de détails !";
+        const q = text.toLowerCase();
+
+        if (q.includes("math")) reply = "Les séances de Maths avec M. BOUSSOF ont lieu le Mardi (16h30), Mercredi (08h30) et Vendredi (10h30).";
+        else if (q.includes("svt")) reply = "Les cours de SVT avec M. FATH sont programmés le Lundi (16h30) et le Jeudi (10h30).";
+        else if (q.includes("physique") || q.includes("pc")) reply = "La Physique-Chimie avec M. MAIZI a lieu le Mardi (10h30) et Mercredi (16h30).";
+        else if (q.includes("français") || q.includes("francais")) reply = "Les cours de Français avec Mme ETTAYBI sont le Lundi (10h30), Mardi (08h30) et Mercredi (14h30).";
+        else if (q.includes("devoir") || q.includes("contrôle")) reply = `Vous avez actuellement ${appState.devoirs.length} devoir(s) ou contrôle(s) à venir. Consulte la section Devoirs !`;
+
+        chatWin.innerHTML += `
+          <div style="background:rgba(37, 99, 235, 0.18); border:1px solid var(--card-border-hover); padding:0.8rem 1rem; border-radius:12px; margin-bottom:0.75rem; max-width:82%;">
             <strong>Hassan AI:</strong> ${reply}
           </div>
         `;
-        windowEl.scrollTop = windowEl.scrollHeight;
-      }, 400);
+        chatWin.scrollTop = chatWin.scrollHeight;
+      }, 350);
 
       input.value = "";
     }
 
-    // Backup & Restore
+    // JSON Export & Import
     function exportJSON() {
       const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `${(appState.siteTitle || 'class').toLowerCase().replace(/\s+/g, '_')}_backup.json`;
+      a.download = `pdc_1bac_ex_a_backup.json`;
       a.click();
     }
 
@@ -822,31 +948,32 @@
           appState = JSON.parse(evt.target.result);
           saveState();
           initApp();
-          alert("Données importées avec succès !");
+          alert("Données réimportées avec succès !");
         } catch (err) {
-          alert("Fichier JSON invalide.");
+          alert("Erreur lors de l'importation du fichier JSON.");
         }
       };
       reader.readAsText(file);
     }
 
     function resetToDefaultData() {
-      if (confirm("Voulez-vous vraiment réinitialiser toutes les données et le thème du site ?")) {
+      if (confirm("Voulez-vous vraiment réinitialiser toutes les données de la classe ?")) {
         appState = defaultData;
         saveState();
         initApp();
       }
     }
 
-    // Initialize Application
+    // Initialize App
     function initApp() {
       applyThemeAndTexts();
       updateAdminUI();
+      updateStats();
       renderDevoirs();
       renderTimetable();
       renderAnnonces();
+      renderStudents();
       renderForum();
-      renderProverbes();
     }
 
     initApp();
