@@ -9,14 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #070c16;
-      --card-bg: rgba(13, 22, 38, 0.8);
-      --card-border: rgba(0, 114, 229, 0.22);
-      --text: #f1f5f9;
+      --primary-color: #0072e5;
+      --primary-glow: rgba(0, 114, 229, 0.4);
+      --bg-color: #070c16;
+      --card-bg: rgba(13, 22, 38, 0.85);
+      --card-border: rgba(0, 114, 229, 0.25);
+      --text-color: #f1f5f9;
       --text-muted: #94a3b8;
-      --accent: #0072e5;
-      --accent-light: #3894f6;
-      --accent-glow: rgba(0, 114, 229, 0.4);
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
@@ -24,7 +23,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; overflow-x: hidden; }
+    body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; padding-bottom: 60px; overflow-x: hidden; transition: background-color 0.3s ease; }
 
     /* Header & Navigation */
     header {
@@ -32,25 +31,28 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
       position: sticky; top: 0; z-index: 100; padding: 1rem 1.5rem;
-      box-shadow: 0 4px 20px rgba(0, 114, 229, 0.12);
+      box-shadow: 0 4px 25px var(--primary-glow);
     }
     .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    
     .logo-group h1 { 
-      font-size: 1.5rem; 
+      font-size: 1.6rem; 
       font-weight: 800; 
-      background: linear-gradient(135deg, #60a5fa, #0072e5); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
+      color: var(--primary-color);
       letter-spacing: -0.5px;
+      text-shadow: 0 0 12px var(--primary-glow);
     }
     .logo-group p { font-size: 0.85rem; color: var(--text-muted); }
     
-    .nav-tabs { display: flex; gap: 0.5rem; background: rgba(0, 114, 229, 0.06); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
-    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
-    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 16px var(--accent-glow); }
+    .nav-tabs { display: flex; gap: 0.4rem; background: rgba(255, 255, 255, 0.03); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
+    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+    .tab-btn.active, .tab-btn:hover { background: var(--primary-color); color: #fff; box-shadow: 0 0 16px var(--primary-glow); }
 
     .admin-badge {
-      display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.4rem 0.85rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s ease;
+    }
+    .admin-badge.active-mode {
+      background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7;
     }
 
     /* Main Container */
@@ -63,17 +65,22 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Cards */
-    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
     .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
 
     /* Buttons & Inputs */
-    .btn { background: linear-gradient(135deg, var(--accent-light), var(--accent)); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px var(--accent-glow); }
-    .btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
-    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text); box-shadow: none; }
+    .btn { background: var(--primary-color); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px var(--primary-glow); }
+    .btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 6px 18px var(--primary-glow); }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-color); box-shadow: none; border: 1px solid var(--card-border); }
     .btn-danger { background: var(--danger); box-shadow: none; }
-    
-    input, select, textarea { width: 100%; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; transition: 0.2s ease; }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+
+    input, select, textarea { width: 100%; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border); color: var(--text-color); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; transition: 0.2s ease; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 10px var(--primary-glow); }
+
+    /* Custom Color Pickers */
+    .color-picker-group { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.25); padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 0.75rem; }
+    .color-picker-group input[type="color"] { width: 40px; height: 35px; padding: 0; margin-bottom: 0; border: none; cursor: pointer; background: transparent; }
 
     /* Subject Badges */
     .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
@@ -85,33 +92,30 @@
     .badge-general { background: #64748b20; color: #94a3b8; border: 1px solid #64748b40; }
 
     /* Devoirs Grid */
-    .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+    .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.25rem; }
     .devoir-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.25rem; position: relative; transition: 0.2s ease; }
-    .devoir-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 114, 229, 0.15); }
+    .devoir-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
     .devoir-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
     .devoir-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
     .devoir-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
 
-    /* Timetable Table */
-    .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .day-column { background: rgba(0, 114, 229, 0.04); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
-    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--accent-light); }
-    .slot-item { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
-    .slot-time { font-weight: 700; color: var(--accent-light); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
+    /* Timetable Grid */
+    .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .day-column { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
+    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--primary-color); }
+    .slot-item { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.85rem; position: relative; }
+    .slot-time { font-weight: 700; color: var(--primary-color); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
     .slot-teacher { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.2rem; }
 
-    /* Forum & Annonces */
+    /* Posts & Annonces */
     .post-item { background: rgba(0, 0, 0, 0.25); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
     .post-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
-    .like-btn { background: rgba(0, 114, 229, 0.1); border: 1px solid var(--card-border); color: var(--text); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s ease; }
-    .like-btn:hover { background: var(--accent); }
 
-    /* Modal */
+    /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #0c1527; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.5rem; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .modal { background: #0c1527; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 520px; padding: 1.5rem; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto; }
 
-    /* Footer */
     footer { text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 3rem; }
   </style>
 </head>
@@ -129,9 +133,10 @@
         <button class="tab-btn active" onclick="switchTab('devoirs')">📝 Devoirs</button>
         <button class="tab-btn" onclick="switchTab('emploi')">📅 Emploi du temps</button>
         <button class="tab-btn" onclick="switchTab('annonces')">📢 Annonces</button>
-        <button class="tab-btn" onclick="switchTab('forum')">💬 Critiques & Forum</button>
-        <button class="tab-btn" onclick="switchTab('proverbes')">📜 Proverbes & Infos</button>
+        <button class="tab-btn" onclick="switchTab('forum')">💬 Forum</button>
+        <button class="tab-btn" onclick="switchTab('proverbes')">📜 Ordre Passage</button>
         <button class="tab-btn" onclick="switchTab('ai')">🤖 Hassan AI</button>
+        <button class="tab-btn admin-only" style="display:none;" onclick="switchTab('settings')">⚙️ Personnaliser</button>
       </nav>
 
       <div class="admin-badge" id="adminToggleBtn" onclick="toggleAdminLogin()">
@@ -172,7 +177,8 @@
     <section id="emploi" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Emploi du Temps Officiel (1BAC EX A)</span>
+          <span>Emploi du Temps Officiel</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('editTimetableModal')">✏️ Modifier l'Emploi</button>
         </div>
         <div class="timetable-grid" id="timetableGrid"></div>
       </div>
@@ -189,7 +195,7 @@
       </div>
     </section>
 
-    <!-- SECTION: FORUM / CRITIQUES -->
+    <!-- SECTION: FORUM -->
     <section id="forum" class="section-page">
       <div class="card">
         <div class="card-title">
@@ -197,7 +203,7 @@
           <button class="btn" onclick="openModal('forumModal')">✍️ Publier une critique</button>
         </div>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          Espace libre et respectueux pour donner votre avis sur le déroulement de la classe. Tout le monde apparaît en Anonyme.
+          Espace libre et respectueux pour donner votre avis sur le déroulement de la classe.
         </p>
         <div id="forumList"></div>
       </div>
@@ -207,12 +213,9 @@
     <section id="proverbes" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Ordre de passage — Proverbe Du Jour</span>
-          <button class="btn admin-only" style="display:none;" onclick="openModal('proverbeModal')">+ Ajouter Élève</button>
+          <span>Ordre de passage & Élèves</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('addStudentModal')">+ Ajouter Élève</button>
         </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-          Consultez la liste des élèves pour les présentations quotidiennes.
-        </p>
         <div id="proverbesList"></div>
       </div>
     </section>
@@ -223,26 +226,59 @@
         <div class="card-title">🤖 Assistant Hassan AI</div>
         <div style="height: 320px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid var(--card-border); padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
           <div style="background: rgba(0, 114, 229, 0.18); border: 1px solid var(--card-border); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
-            <strong>Hassan AI:</strong> Salam 1BAC EX A ! Je suis Hassan AI, l'assistant de votre classe. Posez-moi vos questions sur votre emploi du temps ou vos devoirs !
+            <strong>Hassan AI:</strong> Salam ! Je suis Hassan AI, l'assistant de votre classe. Posez-moi des questions sur vos cours, devoirs ou emploi du temps !
           </div>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-          <input type="text" id="chatInput" placeholder="Posez votre question à Hassan AI..." style="margin-bottom: 0;">
+          <input type="text" id="chatInput" placeholder="Posez votre question à Hassan AI..." style="margin-bottom: 0;" onkeydown="if(event.key==='Enter') sendChatMessage()">
           <button class="btn" onclick="sendChatMessage()">Envoyer</button>
         </div>
       </div>
     </section>
 
-    <!-- ADMIN CONTROLS PANEL -->
-    <div class="card admin-only" style="display:none; border-color: var(--accent);">
-      <div class="card-title">⚡ Panneau d'Administration (Délégué)</div>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-secondary" onclick="exportJSON()">📥 Exporter Données (JSON)</button>
-        <button class="btn btn-secondary" onclick="triggerImportJSON()">📤 Importer Données (JSON)</button>
-        <button class="btn btn-danger" onclick="resetToDefaultData()">🔄 Réinitialiser Données</button>
-        <input type="file" id="jsonFileInput" style="display:none;" onchange="importJSON(event)">
+    <!-- SECTION: LIVE CUSTOMIZER & SETTINGS (ADMIN ONLY) -->
+    <section id="settings" class="section-page">
+      <div class="card">
+        <div class="card-title">🎨 Personnalisation Live du Site (Mode Délégué)</div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Modifiez directement les couleurs, le titre, les textes et le mot de passe sans toucher au code !
+        </p>
+
+        <h3 style="margin-bottom: 0.75rem; color: var(--primary-color);">1. Identité du Site</h3>
+        <label style="font-size: 0.85rem; font-weight:600;">Titre de la Classe :</label>
+        <input type="text" id="settingTitleInput" placeholder="Ex: 1BAC EX A">
+
+        <label style="font-size: 0.85rem; font-weight:600;">Sous-titre / Description :</label>
+        <input type="text" id="settingSubtitleInput" placeholder="Ex: EDT SEM1 - Perd1 (à partir du 21 Sept 2026)">
+
+        <label style="font-size: 0.85rem; font-weight:600;">Texte du Pied de page (Footer) :</label>
+        <input type="text" id="settingFooterInput" placeholder="Ex: Cahier de textes & Planning — 1BAC EX A">
+
+        <h3 style="margin-top: 1rem; margin-bottom: 0.75rem; color: var(--primary-color);">2. Thème & Couleurs</h3>
+        
+        <div class="color-picker-group">
+          <span>Couleur Principale (Accent & Boutons) :</span>
+          <input type="color" id="settingPrimaryColor" onchange="previewTheme()">
+        </div>
+
+        <div class="color-picker-group">
+          <span>Couleur de Fond de la page :</span>
+          <input type="color" id="settingBgColor" onchange="previewTheme()">
+        </div>
+
+        <h3 style="margin-top: 1rem; margin-bottom: 0.75rem; color: var(--primary-color);">3. Sécurité Délégué</h3>
+        <label style="font-size: 0.85rem; font-weight:600;">Nouveau Mot de Passe Délégué :</label>
+        <input type="password" id="settingPasswordInput" placeholder="Laissez vide pour conserver le mot de passe actuel">
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+          <button class="btn" onclick="saveSiteSettings()">💾 Enregistrer les Modifications</button>
+          <button class="btn btn-secondary" onclick="exportJSON()">📥 Exporter Données (JSON)</button>
+          <button class="btn btn-secondary" onclick="triggerImportJSON()">📤 Importer Données (JSON)</button>
+          <button class="btn btn-danger" onclick="resetToDefaultData()">🔄 Réinitialiser Tout</button>
+          <input type="file" id="jsonFileInput" style="display:none;" onchange="importJSON(event)">
+        </div>
       </div>
-    </div>
+    </section>
 
   </main>
 
@@ -251,9 +287,9 @@
   <!-- Admin Login Modal -->
   <div class="modal-overlay" id="loginModal">
     <div class="modal">
-      <h3>Connexion Délégué</h3>
+      <h3>Connexion Mode Délégué</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Mot de passe par défaut: <code>admin123</code></p>
-      <input type="password" id="adminPasswordInput" placeholder="Mot de passe délégué">
+      <input type="password" id="adminPasswordInput" placeholder="Entrez le mot de passe..." onkeydown="if(event.key==='Enter') verifyAdminLogin()">
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('loginModal')">Annuler</button>
         <button class="btn" onclick="verifyAdminLogin()">Se connecter</button>
@@ -261,10 +297,10 @@
     </div>
   </div>
 
-  <!-- Add Devoir Modal -->
+  <!-- Add/Edit Devoir Modal -->
   <div class="modal-overlay" id="devoirModal">
     <div class="modal">
-      <h3>Nouveau Devoir / Contrôle</h3>
+      <h3>Ajouter un Devoir / Contrôle</h3>
       <input type="text" id="devTitle" placeholder="Titre du devoir (ex: Contrôle N°1)">
       <select id="devSubject">
         <option value="Maths">Mathématiques</option>
@@ -278,7 +314,7 @@
         <option value="Philo">Philosophie</option>
       </select>
       <input type="date" id="devDate">
-      <textarea id="devDesc" placeholder="Description du devoir..."></textarea>
+      <textarea id="devDesc" placeholder="Description / Consignes..."></textarea>
       <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
         <button class="btn btn-secondary" onclick="closeModal('devoirModal')">Annuler</button>
         <button class="btn" onclick="saveDevoir()">Enregistrer</button>
@@ -299,6 +335,40 @@
     </div>
   </div>
 
+  <!-- Edit Timetable Slot Modal -->
+  <div class="modal-overlay" id="editTimetableModal">
+    <div class="modal">
+      <h3>Modifier l'Emploi du Temps</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Sélectionnez un jour et modifiez un créneau :</p>
+      <select id="ttDaySelect" onchange="loadTTFormDay()">
+        <option value="Lundi">Lundi</option>
+        <option value="Mardi">Mardi</option>
+        <option value="Mercredi">Mercredi</option>
+        <option value="Jeudi">Jeudi</option>
+        <option value="Vendredi">Vendredi</option>
+      </select>
+      
+      <label style="font-size:0.8rem; font-weight:600;">Séance (Créneau) :</label>
+      <select id="ttSlotPeriod">
+        <option value="1-2">Séance 1-2 (8h30 - 10h30)</option>
+        <option value="3-4">Séance 3-4 (10h30 - 12h30)</option>
+        <option value="5-6">Séance 5-6 (14h30 - 16h30)</option>
+        <option value="7-8">Séance 7-8 (16h30 - 18h30)</option>
+      </select>
+
+      <label style="font-size:0.8rem; font-weight:600;">Matière(s) & Groupes :</label>
+      <input type="text" id="ttSubjectInput" placeholder="Ex: MATHS ou ANG (Gr. A) / EI (Gr. B)">
+
+      <label style="font-size:0.8rem; font-weight:600;">Professeur :</label>
+      <input type="text" id="ttTeacherInput" placeholder="Ex: M. BOUSSOF">
+
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('editTimetableModal')">Annuler</button>
+        <button class="btn" onclick="saveTimetableSlot()">Mettre à jour</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Add Forum Post Modal -->
   <div class="modal-overlay" id="forumModal">
     <div class="modal">
@@ -311,18 +381,42 @@
     </div>
   </div>
 
-  <footer>
+  <!-- Add Student Modal -->
+  <div class="modal-overlay" id="addStudentModal">
+    <div class="modal">
+      <h3>Ajouter un Élève à la liste</h3>
+      <input type="text" id="studentNameInput" placeholder="Nom de l'élève">
+      <select id="studentStatusInput">
+        <option value="A faire">A faire</option>
+        <option value="Suivant">Suivant</option>
+        <option value="Fait">Fait</option>
+      </select>
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('addStudentModal')">Annuler</button>
+        <button class="btn" onclick="saveStudent()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="siteFooterText">
     Cahier de textes & Planning — 1BAC EX A
   </footer>
 
   <script>
+    // Initial Default Application State
     const defaultData = {
+      adminPassword: "admin123",
       isAdmin: false,
+      siteTitle: "1BAC EX A",
+      siteSubtitle: "EDT SEM1 - Perd1 (à partir du 21 Sept 2026)",
+      siteFooter: "Cahier de textes & Planning — 1BAC EX A",
+      primaryColor: "#0072e5",
+      bgColor: "#070c16",
       devoirs: [
         { id: 1, title: "Contrôle N°1 : Fonctions", subject: "Maths", date: "2026-10-08", desc: "M. BOUSSOF - Réviser le chapitre 1.", done: false }
       ],
       annonces: [
-        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel à partir du 21 Septembre 2026 est en ligne !", date: "2026-09-21" }
+        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel est disponible en ligne !", date: "2026-09-21" }
       ],
       forum: [],
       proverbes: [
@@ -361,18 +455,61 @@
       }
     };
 
-    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v3')) || defaultData;
+    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v4')) || defaultData;
 
     function saveState() {
-      localStorage.setItem('pdc_app_data_v3', JSON.stringify(appState));
+      localStorage.setItem('pdc_app_data_v4', JSON.stringify(appState));
     }
 
-    // Tab Switcher
+    // Apply Live Custom Colors & Text
+    function applyThemeAndTexts() {
+      document.documentElement.style.setProperty('--primary-color', appState.primaryColor || "#0072e5");
+      document.documentElement.style.setProperty('--primary-glow', (appState.primaryColor || "#0072e5") + "66");
+      document.documentElement.style.setProperty('--bg-color', appState.bgColor || "#070c16");
+
+      document.getElementById('siteClassTitle').innerText = appState.siteTitle || "1BAC EX A";
+      document.getElementById('siteSubtitle').innerText = appState.siteSubtitle || "";
+      document.getElementById('siteFooterText').innerText = appState.siteFooter || "";
+
+      document.getElementById('settingTitleInput').value = appState.siteTitle || "";
+      document.getElementById('settingSubtitleInput').value = appState.siteSubtitle || "";
+      document.getElementById('settingFooterInput').value = appState.siteFooter || "";
+      document.getElementById('settingPrimaryColor').value = appState.primaryColor || "#0072e5";
+      document.getElementById('settingBgColor').value = appState.bgColor || "#070c16";
+    }
+
+    function previewTheme() {
+      const primary = document.getElementById('settingPrimaryColor').value;
+      const bg = document.getElementById('settingBgColor').value;
+      document.documentElement.style.setProperty('--primary-color', primary);
+      document.documentElement.style.setProperty('--primary-glow', primary + "66");
+      document.documentElement.style.setProperty('--bg-color', bg);
+    }
+
+    function saveSiteSettings() {
+      appState.siteTitle = document.getElementById('settingTitleInput').value;
+      appState.siteSubtitle = document.getElementById('settingSubtitleInput').value;
+      appState.siteFooter = document.getElementById('settingFooterInput').value;
+      appState.primaryColor = document.getElementById('settingPrimaryColor').value;
+      appState.bgColor = document.getElementById('settingBgColor').value;
+
+      const newPass = document.getElementById('settingPasswordInput').value.trim();
+      if (newPass) {
+        appState.adminPassword = newPass;
+        alert("Mot de passe Délégué mis à jour !");
+      }
+
+      saveState();
+      applyThemeAndTexts();
+      alert("Paramètres du site enregistrés !");
+    }
+
+    // Navigation Tab Switcher
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.section-page').forEach(page => page.classList.remove('active'));
       
-      event.target.classList.add('active');
+      if(event && event.target) event.target.classList.add('active');
       document.getElementById(tabId).classList.add('active');
     }
 
@@ -380,7 +517,7 @@
     function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-    // Admin Toggle & Login
+    // Admin Mode & Login
     function toggleAdminLogin() {
       if (appState.isAdmin) {
         appState.isAdmin = false;
@@ -393,11 +530,12 @@
 
     function verifyAdminLogin() {
       const pass = document.getElementById('adminPasswordInput').value;
-      if (pass === "admin123") {
+      const requiredPass = appState.adminPassword || "admin123";
+      if (pass === requiredPass) {
         appState.isAdmin = true;
         updateAdminUI();
         closeModal('loginModal');
-        alert("Connecté en tant que Délégué !");
+        alert("Connecté en tant que Délégué ! Vous pouvez tout modifier.");
       } else {
         alert("Mot de passe incorrect.");
       }
@@ -407,7 +545,13 @@
       const elements = document.querySelectorAll('.admin-only');
       elements.forEach(el => el.style.display = appState.isAdmin ? 'inline-flex' : 'none');
       const btn = document.getElementById('adminToggleBtn');
-      btn.innerText = appState.isAdmin ? "🔓 Délégué (Actif)" : "⚙️ Mode Délégué";
+      if (appState.isAdmin) {
+        btn.innerText = "🔓 Mode Délégué (Actif)";
+        btn.classList.add('active-mode');
+      } else {
+        btn.innerText = "⚙️ Mode Délégué";
+        btn.classList.remove('active-mode');
+      }
     }
 
     // Render Devoirs
@@ -445,7 +589,7 @@
             </div>
             <div class="devoir-title">${d.title}</div>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">${d.desc}</p>
-            ${appState.isAdmin ? `<button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="deleteDevoir(${d.id})">Supprimer</button>` : ''}
+            ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteDevoir(${d.id})">Supprimer</button>` : ''}
           </div>
         `;
       });
@@ -493,6 +637,30 @@
       });
     }
 
+    function saveTimetableSlot() {
+      const day = document.getElementById('ttDaySelect').value;
+      const period = document.getElementById('ttSlotPeriod').value;
+      const subject = document.getElementById('ttSubjectInput').value;
+      const teacher = document.getElementById('ttTeacherInput').value;
+
+      if (!subject) return alert("Veuillez entrer au moins une matière.");
+
+      const daySlots = appState.emploi[day] || [];
+      const existingIndex = daySlots.findIndex(s => s.period === period);
+
+      if (existingIndex >= 0) {
+        daySlots[existingIndex] = { period, subject, teacher };
+      } else {
+        daySlots.push({ period, subject, teacher });
+      }
+
+      appState.emploi[day] = daySlots;
+      saveState();
+      renderTimetable();
+      closeModal('editTimetableModal');
+      alert("Emploi du temps mis à jour !");
+    }
+
     // Render Annonces
     function renderAnnonces() {
       const list = document.getElementById('annoncesList');
@@ -505,7 +673,8 @@
               <span>${a.date}</span>
             </div>
             <h4 style="margin-bottom:0.5rem;">${a.title}</h4>
-            <p style="color:var(--text-muted); font-size:0.9rem;">${a.content}</p>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.5rem;">${a.content}</p>
+            ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteAnnonce(${a.id})">Supprimer</button>` : ''}
           </div>
         `;
       });
@@ -522,6 +691,12 @@
       closeModal('annonceModal');
     }
 
+    function deleteAnnonce(id) {
+      appState.annonces = appState.annonces.filter(a => a.id !== id);
+      saveState();
+      renderAnnonces();
+    }
+
     // Render Forum
     function renderForum() {
       const list = document.getElementById('forumList');
@@ -534,7 +709,10 @@
               <span>${f.date}</span>
             </div>
             <p style="margin-bottom:0.75rem;">${f.content}</p>
-            <button class="like-btn" onclick="likePost(${f.id})">👍 ${f.likes}</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn btn-secondary btn-sm" onclick="likePost(${f.id})">👍 ${f.likes}</button>
+              ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteForumPost(${f.id})">Supprimer</button>` : ''}
+            </div>
           </div>
         `;
       });
@@ -554,21 +732,46 @@
       if (post) { post.likes++; saveState(); renderForum(); }
     }
 
-    // Render Proverbes
+    function deleteForumPost(id) {
+      appState.forum = appState.forum.filter(f => f.id !== id);
+      saveState();
+      renderForum();
+    }
+
+    // Render Proverbes & Students
     function renderProverbes() {
       const list = document.getElementById('proverbesList');
       list.innerHTML = "";
       appState.proverbes.forEach(p => {
         list.innerHTML += `
-          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); border:1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.25); border:1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem;">
             <span>${p.name}</span>
-            <span class="badge ${p.status === 'Fait' ? 'badge-svt' : 'badge-fr'}">${p.status}</span>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <span class="badge ${p.status === 'Fait' ? 'badge-svt' : 'badge-fr'}">${p.status}</span>
+              ${appState.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteStudent(${p.id})">✕</button>` : ''}
+            </div>
           </div>
         `;
       });
     }
 
-    // Chatbot Hassan AI
+    function saveStudent() {
+      const name = document.getElementById('studentNameInput').value;
+      const status = document.getElementById('studentStatusInput').value;
+      if (!name) return;
+      appState.proverbes.push({ id: Date.now(), name, status });
+      saveState();
+      renderProverbes();
+      closeModal('addStudentModal');
+    }
+
+    function deleteStudent(id) {
+      appState.proverbes = appState.proverbes.filter(p => p.id !== id);
+      saveState();
+      renderProverbes();
+    }
+
+    // Hassan AI
     function sendChatMessage() {
       const input = document.getElementById('chatInput');
       const windowEl = document.getElementById('chatWindow');
@@ -582,11 +785,11 @@
       `;
 
       setTimeout(() => {
-        let reply = "Je suis Hassan AI, l'assistant de 1BAC EX A. N'hésite pas à consulter la liste des devoirs ou l'emploi du temps !";
+        let reply = `Je suis Hassan AI, l'assistant de ${appState.siteTitle || 'la classe'}. Consiltez l'emploi du temps ou les devoirs pour en savoir plus !`;
         const q = userText.toLowerCase();
-        if (q.includes("math")) reply = "Vos cours de Maths avec M. BOUSSOF sont le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
-        else if (q.includes("svt")) reply = "Les cours de SVT avec M. FATH sont le Lundi (7-8) et le Jeudi (3-4).";
-        else if (q.includes("pc") || q.includes("physique")) reply = "La Physique-Chimie avec M. MAIZI est programmée le Mardi (3-4) et le Mercredi (7-8).";
+        if (q.includes("math")) reply = "Les cours de Maths avec M. BOUSSOF ont lieu le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
+        else if (q.includes("svt")) reply = "Les cours de SVT avec M. FATH ont lieu le Lundi (7-8) et le Jeudi (3-4).";
+        else if (q.includes("pc") || q.includes("physique")) reply = "La Physique-Chimie avec M. MAIZI a lieu le Mardi (3-4) et Mercredi (7-8).";
         else if (q.includes("français") || q.includes("francais")) reply = "Le Français avec Mme ETTAYBI a lieu le Lundi (3-4), Mardi (1-2) et Mercredi (5-6).";
         
         windowEl.innerHTML += `
@@ -600,12 +803,12 @@
       input.value = "";
     }
 
-    // Backup & Restore Data
+    // Backup & Restore
     function exportJSON() {
       const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "pdc_1bac_ex_a.json";
+      a.download = `${(appState.siteTitle || 'class').toLowerCase().replace(/\s+/g, '_')}_backup.json`;
       a.click();
     }
 
@@ -628,7 +831,7 @@
     }
 
     function resetToDefaultData() {
-      if (confirm("Réinitialiser avec l'emploi du temps par défaut ?")) {
+      if (confirm("Voulez-vous vraiment réinitialiser toutes les données et le thème du site ?")) {
         appState = defaultData;
         saveState();
         initApp();
@@ -637,6 +840,7 @@
 
     // Initialize Application
     function initApp() {
+      applyThemeAndTexts();
       updateAdminUI();
       renderDevoirs();
       renderTimetable();
