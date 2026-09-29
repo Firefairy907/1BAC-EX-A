@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1ère BAC EX B — Dashboard Class</title>
+  <title>1BAC EX A — Dashboard Class</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -84,11 +84,12 @@
     .devoir-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
 
     /* Timetable Table */
-    .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
     .day-column { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
     .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--accent); }
-    .slot-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.6rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
-    .slot-item.active-now { border-color: var(--success); background: rgba(16, 185, 129, 0.15); }
+    .slot-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .slot-time { font-weight: 700; color: var(--accent); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
+    .slot-teacher { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.2rem; }
 
     /* Forum & Annonces */
     .post-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
@@ -110,8 +111,8 @@
   <header>
     <div class="nav-container">
       <div class="logo-group">
-        <h1 id="siteClassTitle">1ère BAC EX B</h1>
-        <p id="siteSubtitle">Cahier de Textes & Planning de la classe</p>
+        <h1 id="siteClassTitle">1BAC EX A</h1>
+        <p id="siteSubtitle">EDT SEM1 - Perd1 (à partir du 21 Sept 2026)</p>
       </div>
 
       <nav class="nav-tabs">
@@ -147,6 +148,10 @@
             <option value="SVT">SVT</option>
             <option value="Français">Français</option>
             <option value="Arabe">Arabe</option>
+            <option value="Anglais">Anglais</option>
+            <option value="HG">Hist-Géo</option>
+            <option value="EI">Éduc Islamique</option>
+            <option value="Philo">Philosophie</option>
           </select>
         </div>
         <div class="devoirs-grid" id="devoirsGrid"></div>
@@ -157,8 +162,7 @@
     <section id="emploi" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Emploi du Temps Hebdomadaire</span>
-          <button class="btn admin-only btn-secondary" style="display:none;" onclick="openModal('emploiModal')">⚡ Modifier les créneaux</button>
+          <span>Emploi du Temps Officlel (1BAC EX A)</span>
         </div>
         <div class="timetable-grid" id="timetableGrid"></div>
       </div>
@@ -209,7 +213,7 @@
         <div class="card-title">🤖 Assistant Ihouf AI</div>
         <div style="height: 300px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
           <div style="background: rgba(99,102,241,0.15); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
-            <strong>Ihouf AI:</strong> Salut ! Je suis l'assistant de la classe. Pose une question sur les devoirs ou le programme.
+            <strong>Ihouf AI:</strong> Salut 1BAC EX A ! Je suis l'assistant de la classe. Des questions sur votre emploi du temps ou les devoirs ?
           </div>
         </div>
         <div style="display: flex; gap: 0.5rem;">
@@ -219,7 +223,7 @@
       </div>
     </section>
 
-    <!-- ADMIN CONTROLS PANEL (When logged in) -->
+    <!-- ADMIN CONTROLS PANEL -->
     <div class="card admin-only" style="display:none; border-color: var(--accent);">
       <div class="card-title">⚡ Panneau d'Administration (Délégué)</div>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -251,13 +255,17 @@
   <div class="modal-overlay" id="devoirModal">
     <div class="modal">
       <h3>Nouveau Devoir / Contrôle</h3>
-      <input type="text" id="devTitle" placeholder="Titre du devoir (ex: Contrôle N°2)">
+      <input type="text" id="devTitle" placeholder="Titre du devoir (ex: Contrôle N°1)">
       <select id="devSubject">
         <option value="Maths">Mathématiques</option>
         <option value="PC">Physique-Chimie</option>
         <option value="SVT">SVT</option>
         <option value="Français">Français</option>
         <option value="Arabe">Arabe</option>
+        <option value="Anglais">Anglais</option>
+        <option value="HG">Hist-Géo</option>
+        <option value="EI">Éduc Islamique</option>
+        <option value="Philo">Philosophie</option>
       </select>
       <input type="date" id="devDate">
       <textarea id="devDesc" placeholder="Description du devoir..."></textarea>
@@ -294,41 +302,60 @@
   </div>
 
   <footer>
-    Site géré par le délégué de classe — 1ère BAC EX B
+    Cahier de textes & Planning — 1BAC EX A
   </footer>
 
   <script>
-    // Initial Class Data State
+    // Initial Class Data State with EXACT Timetable from Image
     const defaultData = {
       isAdmin: false,
       devoirs: [
-        { id: 1, title: "Contrôle N°1 : Fonctions Digitales", subject: "Maths", date: "2026-10-05", desc: "Réviser le chapitre sur la continuité et les limites.", done: false },
-        { id: 2, title: "Préparation Exposé Français", subject: "Français", date: "2026-10-02", desc: "La Boîte à Merveilles - Chapitre 3 & 4.", done: false }
+        { id: 1, title: "Contrôle N°1 : Fonctions", subject: "Maths", date: "2026-10-08", desc: "M. BOUSSOF - Réviser le chapitre 1.", done: false }
       ],
       annonces: [
-        { id: 1, title: "Changement de salle Lundi", content: "Le cours de SVT aura lieu en Salle 12 à partir de 10h.", date: "2026-09-28" }
+        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel à partir du 21 Septembre 2026 est maintenant en ligne !", date: "2026-09-21" }
       ],
-      forum: [
-        { id: 1, content: "Ce serait super d'organiser une séance de révision collective pour la Physique !", likes: 5, date: "2026-09-29" }
-      ],
+      forum: [],
       proverbes: [
-        { id: 1, name: "Amine K.", status: "Fait" },
-        { id: 2, name: "Sarra M.", status: "Suivant" },
-        { id: 3, name: "Youssef T.", status: "En attente" }
+        { id: 1, name: "Élève 1", status: "Fait" },
+        { id: 2, name: "Élève 2", status: "Suivant" }
       ],
       emploi: {
-        "Lundi": ["08:00 - Maths", "10:00 - Physique-Chimie", "14:00 - SVT"],
-        "Mardi": ["08:00 - Français", "10:00 - Arabe", "14:00 - Philosophie"],
-        "Mercredi": ["08:00 - Maths", "10:00 - Anglais"],
-        "Jeudi": ["08:00 - Physique-Chimie", "10:00 - SVT", "14:00 - EPS"],
-        "Vendredi": ["08:00 - Hist-Géo", "10:00 - Islamique"]
+        "Lundi": [
+          { period: "1-2", subject: "ANG (Gr. A) / EI (Gr. B)", teacher: "" },
+          { period: "3-4", subject: "FR", teacher: "Mme ETTAYBI" },
+          { period: "5-6", subject: "HG", teacher: "M. TOULIER" },
+          { period: "7-8", subject: "SVT", teacher: "M. FATH" }
+        ],
+        "Mardi": [
+          { period: "1-2", subject: "FR", teacher: "Mme ETTAYBI" },
+          { period: "3-4", subject: "PC", teacher: "M. MAIZI" },
+          { period: "5-6", subject: "ARB", teacher: "M. OUREZOUK" },
+          { period: "7-8", subject: "MATHS", teacher: "M. BOUSSOF" }
+        ],
+        "Mercredi": [
+          { period: "1-2", subject: "MATHS", teacher: "M. BOUSSOF" },
+          { period: "3-4", subject: "ANG", teacher: "Mme BARGACH" },
+          { period: "5-6", subject: "FR", teacher: "Mme ETTAYBI" },
+          { period: "7-8", subject: "PC", teacher: "M. MAIZI" }
+        ],
+        "Jeudi": [
+          { period: "1-2", subject: "ARB (Gr. A) / HG (Gr. B)", teacher: "" },
+          { period: "3-4", subject: "SVT", teacher: "M. FATH" },
+          { period: "5-6", subject: "PHILO", teacher: "M. FAZAZI" },
+          { period: "7-8", subject: "EPS", teacher: "EPS" }
+        ],
+        "Vendredi": [
+          { period: "1-2", subject: "EI", teacher: "M. AAZZAB" },
+          { period: "3-4", subject: "MATHS", teacher: "M. BOUSSOF" }
+        ]
       }
     };
 
-    let appState = JSON.parse(localStorage.getItem('pdc_app_data')) || defaultData;
+    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v2')) || defaultData;
 
     function saveState() {
-      localStorage.setItem('pdc_app_data', JSON.stringify(appState));
+      localStorage.setItem('pdc_app_data_v2', JSON.stringify(appState));
     }
 
     // Tab Switcher
@@ -394,7 +421,13 @@
       }
 
       filtered.forEach(d => {
-        const badgeClass = d.subject === "Maths" ? "badge-maths" : (d.subject === "PC" ? "badge-pc" : "badge-svt");
+        let badgeClass = "badge-general";
+        if (d.subject === "Maths") badgeClass = "badge-maths";
+        else if (d.subject === "PC") badgeClass = "badge-pc";
+        else if (d.subject === "SVT") badgeClass = "badge-svt";
+        else if (d.subject === "Français") badgeClass = "badge-fr";
+        else if (d.subject === "Arabe") badgeClass = "badge-ar";
+
         grid.innerHTML += `
           <div class="devoir-card">
             <div class="devoir-header">
@@ -434,7 +467,14 @@
       const grid = document.getElementById('timetableGrid');
       grid.innerHTML = "";
       Object.keys(appState.emploi).forEach(day => {
-        let slotsHTML = appState.emploi[day].map(s => `<div class="slot-item">${s}</div>`).join('');
+        let slotsHTML = appState.emploi[day].map(s => `
+          <div class="slot-item">
+            <span class="slot-time">Séance ${s.period}</span>
+            <strong>${s.subject}</strong>
+            ${s.teacher ? `<span class="slot-teacher">${s.teacher}</span>` : ''}
+          </div>
+        `).join('');
+
         grid.innerHTML += `
           <div class="day-column">
             <div class="day-title">${day}</div>
@@ -533,8 +573,10 @@
       `;
 
       setTimeout(() => {
-        let reply = "Je suis là pour vous aider ! Vérifiez l'onglet Devoirs pour connaître le travail à faire.";
-        if (userText.toLowerCase().includes("math")) reply = "Prochain contrôle de Maths prévu pour le 5 Octobre !";
+        let reply = "Je suis l'assistant 1BAC EX A. N'hésite pas à consulter la liste des devoirs ou l'emploi du temps !";
+        if (userText.toLowerCase().includes("math")) reply = "Vos cours de Maths avec M. BOUSSOF ont lieu le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
+        if (userText.toLowerCase().includes("svt")) reply = "SVT avec M. FATH est programmé le Lundi (7-8) et le Jeudi (3-4).";
+        
         windowEl.innerHTML += `
           <div style="background:rgba(99,102,241,0.15); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%;">
             <strong>Ihouf AI:</strong> ${reply}
@@ -551,7 +593,7 @@
       const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "pdc_class_data.json";
+      a.download = "pdc_1bac_ex_a.json";
       a.click();
     }
 
@@ -574,7 +616,7 @@
     }
 
     function resetToDefaultData() {
-      if (confirm("Réinitialiser toutes les données ?")) {
+      if (confirm("Réinitialiser avec l'emploi du temps par défaut ?")) {
         appState = defaultData;
         saveState();
         initApp();
