@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1ère BAC EX B — Dashboard Class</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 30, 49, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; overflow-x: hidden; }
+
+    /* Header & Navigation */
+    header {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 15, 25, 0.8) 100%);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky; top: 0; z-index: 100; padding: 1rem 1.5rem;
+    }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .logo-group h1 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-group p { font-size: 0.85rem; color: var(--text-muted); }
+    
+    .nav-tabs { display: flex; gap: 0.5rem; background: rgba(255,255,255,0.03); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
+    .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); }
+
+    .admin-badge {
+      display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+
+    /* Main Container */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    /* Sections */
+    .section-page { display: none; }
+    .section-page.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Utility Cards */
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; }
+    .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Buttons & Inputs */
+    .btn { background: var(--accent); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text); }
+    .btn-danger { background: var(--danger); }
+    
+    input, select, textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+    /* Subject Badges */
+    .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .badge-maths { background: #3b82f620; color: #60a5fa; border: 1px solid #3b82f640; }
+    .badge-pc { background: #8b5cf620; color: #a78bfa; border: 1px solid #8b5cf640; }
+    .badge-svt { background: #10b98120; color: #34d399; border: 1px solid #10b98140; }
+    .badge-fr { background: #f59e0b20; color: #fbbf24; border: 1px solid #f59e0b40; }
+    .badge-ar { background: #ec489920; color: #f472b6; border: 1px solid #ec489940; }
+    .badge-general { background: #64748b20; color: #94a3b8; border: 1px solid #64748b40; }
+
+    /* Devoirs Grid */
+    .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+    .devoir-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.25rem; position: relative; transition: 0.2s ease; }
+    .devoir-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .devoir-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+    .devoir-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .devoir-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
+
+    /* Timetable Table */
+    .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .day-column { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
+    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--accent); }
+    .slot-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.6rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .slot-item.active-now { border-color: var(--success); background: rgba(16, 185, 129, 0.15); }
+
+    /* Forum & Annonces */
+    .post-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    .post-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+    .like-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #131b2e; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.5rem; position: relative; }
+
+    /* Footer */
+    footer { text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo-group">
+        <h1 id="siteClassTitle">1ère BAC EX B</h1>
+        <p id="siteSubtitle">Cahier de Textes & Planning de la classe</p>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('devoirs')">📝 Devoirs</button>
+        <button class="tab-btn" onclick="switchTab('emploi')">📅 Emploi du temps</button>
+        <button class="tab-btn" onclick="switchTab('annonces')">📢 Annonces</button>
+        <button class="tab-btn" onclick="switchTab('forum')">💬 Critiques & Forum</button>
+        <button class="tab-btn" onclick="switchTab('proverbes')">📜 Proverbes & Infos</button>
+        <button class="tab-btn" onclick="switchTab('ai')">🤖 Assistant AI</button>
+      </nav>
+
+      <div class="admin-badge" id="adminToggleBtn" onclick="toggleAdminLogin()">
+        ⚙️ Mode Délégué
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SECTION: DEVOIRS -->
+    <section id="devoirs" class="section-page active">
+      <div class="card">
+        <div class="card-title">
+          <span>Planning des Devoirs & Contrôles</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('devoirModal')">+ Nouveau Devoir</button>
+        </div>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <input type="text" id="devoirSearch" placeholder="Rechercher un devoir ou matière..." onkeyup="renderDevoirs()" style="flex:1; margin-bottom:0;">
+          <select id="devoirFilter" onchange="renderDevoirs()" style="width: auto; margin-bottom:0;">
+            <option value="ALL">Toutes les matières</option>
+            <option value="Maths">Mathématiques</option>
+            <option value="PC">Physique-Chimie</option>
+            <option value="SVT">SVT</option>
+            <option value="Français">Français</option>
+            <option value="Arabe">Arabe</option>
+          </select>
+        </div>
+        <div class="devoirs-grid" id="devoirsGrid"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: EMPLOI DU TEMPS -->
+    <section id="emploi" class="section-page">
+      <div class="card">
+        <div class="card-title">
+          <span>Emploi du Temps Hebdomadaire</span>
+          <button class="btn admin-only btn-secondary" style="display:none;" onclick="openModal('emploiModal')">⚡ Modifier les créneaux</button>
+        </div>
+        <div class="timetable-grid" id="timetableGrid"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: ANNONCES -->
+    <section id="annonces" class="section-page">
+      <div class="card">
+        <div class="card-title">
+          <span>Annonces Officielles</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('annonceModal')">+ Nouvelle Annonce</button>
+        </div>
+        <div id="annoncesList"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: FORUM / CRITIQUES -->
+    <section id="forum" class="section-page">
+      <div class="card">
+        <div class="card-title">
+          <span>Critiques & Discussion Anonyme</span>
+          <button class="btn" onclick="openModal('forumModal')">✍️ Publier une critique</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Espace libre et respectueux pour donner votre avis sur le déroulement de la classe. Tout le monde apparaît en Anonyme.
+        </p>
+        <div id="forumList"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: PROVERBES & INFOS -->
+    <section id="proverbes" class="section-page">
+      <div class="card">
+        <div class="card-title">
+          <span>Ordre de passage — Proverbe Du Jour</span>
+          <button class="btn admin-only" style="display:none;" onclick="openModal('proverbeModal')">+ Ajouter Élève</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          Consultez la liste des élèves pour les présentations quotidiennes.
+        </p>
+        <div id="proverbesList"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: AI ASSISTANT -->
+    <section id="ai" class="section-page">
+      <div class="card">
+        <div class="card-title">🤖 Assistant Ihouf AI</div>
+        <div style="height: 300px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
+          <div style="background: rgba(99,102,241,0.15); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
+            <strong>Ihouf AI:</strong> Salut ! Je suis l'assistant de la classe. Pose une question sur les devoirs ou le programme.
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="chatInput" placeholder="Pose ta question ici..." style="margin-bottom: 0;">
+          <button class="btn" onclick="sendChatMessage()">Envoyer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN CONTROLS PANEL (When logged in) -->
+    <div class="card admin-only" style="display:none; border-color: var(--accent);">
+      <div class="card-title">⚡ Panneau d'Administration (Délégué)</div>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-secondary" onclick="exportJSON()">📥 Exporter Données (JSON)</button>
+        <button class="btn btn-secondary" onclick="triggerImportJSON()">📤 Importer Données (JSON)</button>
+        <button class="btn btn-danger" onclick="resetToDefaultData()">🔄 Réinitialiser Données</button>
+        <input type="file" id="jsonFileInput" style="display:none;" onchange="importJSON(event)">
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODALS -->
+
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <h3>Connexion Délégué</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Mot de passe par défaut: <code>admin123</code></p>
+      <input type="password" id="adminPasswordInput" placeholder="Mot de passe délégué">
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('loginModal')">Annuler</button>
+        <button class="btn" onclick="verifyAdminLogin()">Se connecter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Devoir Modal -->
+  <div class="modal-overlay" id="devoirModal">
+    <div class="modal">
+      <h3>Nouveau Devoir / Contrôle</h3>
+      <input type="text" id="devTitle" placeholder="Titre du devoir (ex: Contrôle N°2)">
+      <select id="devSubject">
+        <option value="Maths">Mathématiques</option>
+        <option value="PC">Physique-Chimie</option>
+        <option value="SVT">SVT</option>
+        <option value="Français">Français</option>
+        <option value="Arabe">Arabe</option>
+      </select>
+      <input type="date" id="devDate">
+      <textarea id="devDesc" placeholder="Description du devoir..."></textarea>
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('devoirModal')">Annuler</button>
+        <button class="btn" onclick="saveDevoir()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Annonce Modal -->
+  <div class="modal-overlay" id="annonceModal">
+    <div class="modal">
+      <h3>Publier une Annonce</h3>
+      <input type="text" id="annTitle" placeholder="Titre de l'annonce">
+      <textarea id="annContent" placeholder="Contenu de l'annonce..."></textarea>
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('annonceModal')">Annuler</button>
+        <button class="btn" onclick="saveAnnonce()">Publier</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Forum Post Modal -->
+  <div class="modal-overlay" id="forumModal">
+    <div class="modal">
+      <h3>Publier une critique anonyme</h3>
+      <textarea id="forumContent" placeholder="Exprimez votre opinion de manière respectueuse..."></textarea>
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn btn-secondary" onclick="closeModal('forumModal')">Annuler</button>
+        <button class="btn" onclick="saveForumPost()">Poster</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Site géré par le délégué de classe — 1ère BAC EX B
+  </footer>
+
+  <script>
+    // Initial Class Data State
+    const defaultData = {
+      isAdmin: false,
+      devoirs: [
+        { id: 1, title: "Contrôle N°1 : Fonctions Digitales", subject: "Maths", date: "2026-10-05", desc: "Réviser le chapitre sur la continuité et les limites.", done: false },
+        { id: 2, title: "Préparation Exposé Français", subject: "Français", date: "2026-10-02", desc: "La Boîte à Merveilles - Chapitre 3 & 4.", done: false }
+      ],
+      annonces: [
+        { id: 1, title: "Changement de salle Lundi", content: "Le cours de SVT aura lieu en Salle 12 à partir de 10h.", date: "2026-09-28" }
+      ],
+      forum: [
+        { id: 1, content: "Ce serait super d'organiser une séance de révision collective pour la Physique !", likes: 5, date: "2026-09-29" }
+      ],
+      proverbes: [
+        { id: 1, name: "Amine K.", status: "Fait" },
+        { id: 2, name: "Sarra M.", status: "Suivant" },
+        { id: 3, name: "Youssef T.", status: "En attente" }
+      ],
+      emploi: {
+        "Lundi": ["08:00 - Maths", "10:00 - Physique-Chimie", "14:00 - SVT"],
+        "Mardi": ["08:00 - Français", "10:00 - Arabe", "14:00 - Philosophie"],
+        "Mercredi": ["08:00 - Maths", "10:00 - Anglais"],
+        "Jeudi": ["08:00 - Physique-Chimie", "10:00 - SVT", "14:00 - EPS"],
+        "Vendredi": ["08:00 - Hist-Géo", "10:00 - Islamique"]
+      }
+    };
+
+    let appState = JSON.parse(localStorage.getItem('pdc_app_data')) || defaultData;
+
+    function saveState() {
+      localStorage.setItem('pdc_app_data', JSON.stringify(appState));
+    }
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.section-page').forEach(page => page.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Modal Control
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    // Admin Toggle & Login
+    function toggleAdminLogin() {
+      if (appState.isAdmin) {
+        appState.isAdmin = false;
+        updateAdminUI();
+        alert("Mode Délégué désactivé.");
+      } else {
+        openModal('loginModal');
+      }
+    }
+
+    function verifyAdminLogin() {
+      const pass = document.getElementById('adminPasswordInput').value;
+      if (pass === "admin123") {
+        appState.isAdmin = true;
+        updateAdminUI();
+        closeModal('loginModal');
+        alert("Connecté en tant que Délégué !");
+      } else {
+        alert("Mot de passe incorrect.");
+      }
+    }
+
+    function updateAdminUI() {
+      const elements = document.querySelectorAll('.admin-only');
+      elements.forEach(el => el.style.display = appState.isAdmin ? 'inline-flex' : 'none');
+      const btn = document.getElementById('adminToggleBtn');
+      btn.innerText = appState.isAdmin ? "🔓 Délégué (Actif)" : "⚙️ Mode Délégué";
+    }
+
+    // Render Devoirs
+    function renderDevoirs() {
+      const grid = document.getElementById('devoirGrid') || document.getElementById('devoirsGrid');
+      const search = document.getElementById('devoirSearch').value.toLowerCase();
+      const filter = document.getElementById('devoirFilter').value;
+
+      grid.innerHTML = "";
+
+      const filtered = appState.devoirs.filter(d => {
+        const matchesSearch = d.title.toLowerCase().includes(search) || d.desc.toLowerCase().includes(search);
+        const matchesSubject = filter === "ALL" || d.subject === filter;
+        return matchesSearch && matchesSubject;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-muted)">Aucun devoir trouvé.</p>`;
+        return;
+      }
+
+      filtered.forEach(d => {
+        const badgeClass = d.subject === "Maths" ? "badge-maths" : (d.subject === "PC" ? "badge-pc" : "badge-svt");
+        grid.innerHTML += `
+          <div class="devoir-card">
+            <div class="devoir-header">
+              <span class="badge ${badgeClass}">${d.subject}</span>
+              <span class="devoir-date">📅 ${d.date}</span>
+            </div>
+            <div class="devoir-title">${d.title}</div>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">${d.desc}</p>
+            ${appState.isAdmin ? `<button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="deleteDevoir(${d.id})">Supprimer</button>` : ''}
+          </div>
+        `;
+      });
+    }
+
+    function saveDevoir() {
+      const title = document.getElementById('devTitle').value;
+      const subject = document.getElementById('devSubject').value;
+      const date = document.getElementById('devDate').value;
+      const desc = document.getElementById('devDesc').value;
+
+      if (!title || !date) return alert("Remplissez tous les champs obligatoires.");
+
+      appState.devoirs.push({ id: Date.now(), title, subject, date, desc, done: false });
+      saveState();
+      renderDevoirs();
+      closeModal('devoirModal');
+    }
+
+    function deleteDevoir(id) {
+      appState.devoirs = appState.devoirs.filter(d => d.id !== id);
+      saveState();
+      renderDevoirs();
+    }
+
+    // Render Timetable
+    function renderTimetable() {
+      const grid = document.getElementById('timetableGrid');
+      grid.innerHTML = "";
+      Object.keys(appState.emploi).forEach(day => {
+        let slotsHTML = appState.emploi[day].map(s => `<div class="slot-item">${s}</div>`).join('');
+        grid.innerHTML += `
+          <div class="day-column">
+            <div class="day-title">${day}</div>
+            ${slotsHTML}
+          </div>
+        `;
+      });
+    }
+
+    // Render Annonces
+    function renderAnnonces() {
+      const list = document.getElementById('annoncesList');
+      list.innerHTML = "";
+      appState.annonces.forEach(a => {
+        list.innerHTML += `
+          <div class="post-item">
+            <div class="post-meta">
+              <span>📢 Délégué</span>
+              <span>${a.date}</span>
+            </div>
+            <h4 style="margin-bottom:0.5rem;">${a.title}</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem;">${a.content}</p>
+          </div>
+        `;
+      });
+    }
+
+    function saveAnnonce() {
+      const title = document.getElementById('annTitle').value;
+      const content = document.getElementById('annContent').value;
+      if (!title || !content) return alert("Champs vides.");
+
+      appState.annonces.unshift({ id: Date.now(), title, content, date: new Date().toISOString().split('T')[0] });
+      saveState();
+      renderAnnonces();
+      closeModal('annonceModal');
+    }
+
+    // Render Forum
+    function renderForum() {
+      const list = document.getElementById('forumList');
+      list.innerHTML = "";
+      appState.forum.forEach(f => {
+        list.innerHTML += `
+          <div class="post-item">
+            <div class="post-meta">
+              <span>👤 Anonyme</span>
+              <span>${f.date}</span>
+            </div>
+            <p style="margin-bottom:0.75rem;">${f.content}</p>
+            <button class="like-btn" onclick="likePost(${f.id})">👍 ${f.likes}</button>
+          </div>
+        `;
+      });
+    }
+
+    function saveForumPost() {
+      const content = document.getElementById('forumContent').value;
+      if (!content) return;
+      appState.forum.unshift({ id: Date.now(), content, likes: 0, date: new Date().toISOString().split('T')[0] });
+      saveState();
+      renderForum();
+      closeModal('forumModal');
+    }
+
+    function likePost(id) {
+      const post = appState.forum.find(f => f.id === id);
+      if (post) { post.likes++; saveState(); renderForum(); }
+    }
+
+    // Render Proverbes
+    function renderProverbes() {
+      const list = document.getElementById('proverbesList');
+      list.innerHTML = "";
+      appState.proverbes.forEach(p => {
+        list.innerHTML += `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); border:1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem;">
+            <span>${p.name}</span>
+            <span class="badge ${p.status === 'Fait' ? 'badge-svt' : 'badge-fr'}">${p.status}</span>
+          </div>
+        `;
+      });
+    }
+
+    // Chatbot AI
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const windowEl = document.getElementById('chatWindow');
+      if (!input.value.trim()) return;
+
+      const userText = input.value;
+      windowEl.innerHTML += `
+        <div style="background:rgba(255,255,255,0.08); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%; margin-left:auto; text-align:right;">
+          ${userText}
+        </div>
+      `;
+
+      setTimeout(() => {
+        let reply = "Je suis là pour vous aider ! Vérifiez l'onglet Devoirs pour connaître le travail à faire.";
+        if (userText.toLowerCase().includes("math")) reply = "Prochain contrôle de Maths prévu pour le 5 Octobre !";
+        windowEl.innerHTML += `
+          <div style="background:rgba(99,102,241,0.15); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%;">
+            <strong>Ihouf AI:</strong> ${reply}
+          </div>
+        `;
+        windowEl.scrollTop = windowEl.scrollHeight;
+      }, 500);
+
+      input.value = "";
+    }
+
+    // Backup & Restore Data
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "pdc_class_data.json";
+      a.click();
+    }
+
+    function triggerImportJSON() { document.getElementById('jsonFileInput').click(); }
+    function importJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          appState = JSON.parse(evt.target.result);
+          saveState();
+          initApp();
+          alert("Données importées avec succès !");
+        } catch (err) {
+          alert("Fichier JSON invalide.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToDefaultData() {
+      if (confirm("Réinitialiser toutes les données ?")) {
+        appState = defaultData;
+        saveState();
+        initApp();
+      }
+    }
+
+    // Initialize Application
+    function initApp() {
+      updateAdminUI();
+      renderDevoirs();
+      renderTimetable();
+      renderAnnonces();
+      renderForum();
+      renderProverbes();
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
