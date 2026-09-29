@@ -9,13 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: rgba(22, 30, 49, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg: #070c16;
+      --card-bg: rgba(13, 22, 38, 0.8);
+      --card-border: rgba(0, 114, 229, 0.22);
       --text: #f1f5f9;
       --text-muted: #94a3b8;
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.35);
+      --accent: #0072e5;
+      --accent-light: #3894f6;
+      --accent-glow: rgba(0, 114, 229, 0.4);
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
@@ -27,18 +28,26 @@
 
     /* Header & Navigation */
     header {
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 15, 25, 0.8) 100%);
+      background: linear-gradient(180deg, rgba(8, 16, 32, 0.95) 0%, rgba(7, 12, 22, 0.85) 100%);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
       position: sticky; top: 0; z-index: 100; padding: 1rem 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 114, 229, 0.12);
     }
     .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .logo-group h1 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-group h1 { 
+      font-size: 1.5rem; 
+      font-weight: 800; 
+      background: linear-gradient(135deg, #60a5fa, #0072e5); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      letter-spacing: -0.5px;
+    }
     .logo-group p { font-size: 0.85rem; color: var(--text-muted); }
     
-    .nav-tabs { display: flex; gap: 0.5rem; background: rgba(255,255,255,0.03); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
+    .nav-tabs { display: flex; gap: 0.5rem; background: rgba(0, 114, 229, 0.06); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--card-border); overflow-x: auto; }
     .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
-    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 16px var(--accent-glow); }
 
     .admin-badge {
       display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
@@ -53,22 +62,22 @@
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Utility Cards */
-    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; }
-    .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    /* Cards */
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
 
     /* Buttons & Inputs */
-    .btn { background: var(--accent); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text); }
-    .btn-danger { background: var(--danger); }
+    .btn { background: linear-gradient(135deg, var(--accent-light), var(--accent)); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px var(--accent-glow); }
+    .btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text); box-shadow: none; }
+    .btn-danger { background: var(--danger); box-shadow: none; }
     
-    input, select, textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    input, select, textarea { width: 100%; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border); color: var(--text); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; outline: none; transition: 0.2s ease; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
     /* Subject Badges */
     .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-    .badge-maths { background: #3b82f620; color: #60a5fa; border: 1px solid #3b82f640; }
+    .badge-maths { background: rgba(0, 114, 229, 0.2); color: #60a5fa; border: 1px solid rgba(0, 114, 229, 0.4); }
     .badge-pc { background: #8b5cf620; color: #a78bfa; border: 1px solid #8b5cf640; }
     .badge-svt { background: #10b98120; color: #34d399; border: 1px solid #10b98140; }
     .badge-fr { background: #f59e0b20; color: #fbbf24; border: 1px solid #f59e0b40; }
@@ -78,28 +87,29 @@
     /* Devoirs Grid */
     .devoirs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
     .devoir-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.25rem; position: relative; transition: 0.2s ease; }
-    .devoir-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .devoir-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 114, 229, 0.15); }
     .devoir-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
     .devoir-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
     .devoir-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
 
     /* Timetable Table */
     .timetable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .day-column { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
-    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--accent); }
-    .slot-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
-    .slot-time { font-weight: 700; color: var(--accent); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
+    .day-column { background: rgba(0, 114, 229, 0.04); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; }
+    .day-title { font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem; text-align: center; color: var(--accent-light); }
+    .slot-item { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .slot-time { font-weight: 700; color: var(--accent-light); font-size: 0.75rem; display: block; margin-bottom: 0.2rem; }
     .slot-teacher { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.2rem; }
 
     /* Forum & Annonces */
-    .post-item { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    .post-item { background: rgba(0, 0, 0, 0.25); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
     .post-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
-    .like-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
+    .like-btn { background: rgba(0, 114, 229, 0.1); border: 1px solid var(--card-border); color: var(--text); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s ease; }
+    .like-btn:hover { background: var(--accent); }
 
     /* Modal */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #131b2e; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.5rem; position: relative; }
+    .modal { background: #0c1527; border: 1px solid var(--card-border); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.5rem; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
 
     /* Footer */
     footer { text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--card-border); margin-top: 3rem; }
@@ -121,7 +131,7 @@
         <button class="tab-btn" onclick="switchTab('annonces')">📢 Annonces</button>
         <button class="tab-btn" onclick="switchTab('forum')">💬 Critiques & Forum</button>
         <button class="tab-btn" onclick="switchTab('proverbes')">📜 Proverbes & Infos</button>
-        <button class="tab-btn" onclick="switchTab('ai')">🤖 Assistant AI</button>
+        <button class="tab-btn" onclick="switchTab('ai')">🤖 Hassan AI</button>
       </nav>
 
       <div class="admin-badge" id="adminToggleBtn" onclick="toggleAdminLogin()">
@@ -162,7 +172,7 @@
     <section id="emploi" class="section-page">
       <div class="card">
         <div class="card-title">
-          <span>Emploi du Temps Officlel (1BAC EX A)</span>
+          <span>Emploi du Temps Officiel (1BAC EX A)</span>
         </div>
         <div class="timetable-grid" id="timetableGrid"></div>
       </div>
@@ -210,14 +220,14 @@
     <!-- SECTION: AI ASSISTANT -->
     <section id="ai" class="section-page">
       <div class="card">
-        <div class="card-title">🤖 Assistant Ihouf AI</div>
-        <div style="height: 300px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
-          <div style="background: rgba(99,102,241,0.15); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
-            <strong>Ihouf AI:</strong> Salut 1BAC EX A ! Je suis l'assistant de la classe. Des questions sur votre emploi du temps ou les devoirs ?
+        <div class="card-title">🤖 Assistant Hassan AI</div>
+        <div style="height: 320px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid var(--card-border); padding: 1rem; margin-bottom: 1rem;" id="chatWindow">
+          <div style="background: rgba(0, 114, 229, 0.18); border: 1px solid var(--card-border); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; max-width: 80%;">
+            <strong>Hassan AI:</strong> Salam 1BAC EX A ! Je suis Hassan AI, l'assistant de votre classe. Posez-moi vos questions sur votre emploi du temps ou vos devoirs !
           </div>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-          <input type="text" id="chatInput" placeholder="Pose ta question ici..." style="margin-bottom: 0;">
+          <input type="text" id="chatInput" placeholder="Posez votre question à Hassan AI..." style="margin-bottom: 0;">
           <button class="btn" onclick="sendChatMessage()">Envoyer</button>
         </div>
       </div>
@@ -306,14 +316,13 @@
   </footer>
 
   <script>
-    // Initial Class Data State with EXACT Timetable from Image
     const defaultData = {
       isAdmin: false,
       devoirs: [
         { id: 1, title: "Contrôle N°1 : Fonctions", subject: "Maths", date: "2026-10-08", desc: "M. BOUSSOF - Réviser le chapitre 1.", done: false }
       ],
       annonces: [
-        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel à partir du 21 Septembre 2026 est maintenant en ligne !", date: "2026-09-21" }
+        { id: 1, title: "Mise à jour Emploi du Temps", content: "L'emploi du temps officiel à partir du 21 Septembre 2026 est en ligne !", date: "2026-09-21" }
       ],
       forum: [],
       proverbes: [
@@ -352,10 +361,10 @@
       }
     };
 
-    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v2')) || defaultData;
+    let appState = JSON.parse(localStorage.getItem('pdc_app_data_v3')) || defaultData;
 
     function saveState() {
-      localStorage.setItem('pdc_app_data_v2', JSON.stringify(appState));
+      localStorage.setItem('pdc_app_data_v3', JSON.stringify(appState));
     }
 
     // Tab Switcher
@@ -403,7 +412,7 @@
 
     // Render Devoirs
     function renderDevoirs() {
-      const grid = document.getElementById('devoirGrid') || document.getElementById('devoirsGrid');
+      const grid = document.getElementById('devoirsGrid');
       const search = document.getElementById('devoirSearch').value.toLowerCase();
       const filter = document.getElementById('devoirFilter').value;
 
@@ -559,7 +568,7 @@
       });
     }
 
-    // Chatbot AI
+    // Chatbot Hassan AI
     function sendChatMessage() {
       const input = document.getElementById('chatInput');
       const windowEl = document.getElementById('chatWindow');
@@ -567,23 +576,26 @@
 
       const userText = input.value;
       windowEl.innerHTML += `
-        <div style="background:rgba(255,255,255,0.08); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%; margin-left:auto; text-align:right;">
+        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%; margin-left:auto; text-align:right;">
           ${userText}
         </div>
       `;
 
       setTimeout(() => {
-        let reply = "Je suis l'assistant 1BAC EX A. N'hésite pas à consulter la liste des devoirs ou l'emploi du temps !";
-        if (userText.toLowerCase().includes("math")) reply = "Vos cours de Maths avec M. BOUSSOF ont lieu le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
-        if (userText.toLowerCase().includes("svt")) reply = "SVT avec M. FATH est programmé le Lundi (7-8) et le Jeudi (3-4).";
+        let reply = "Je suis Hassan AI, l'assistant de 1BAC EX A. N'hésite pas à consulter la liste des devoirs ou l'emploi du temps !";
+        const q = userText.toLowerCase();
+        if (q.includes("math")) reply = "Vos cours de Maths avec M. BOUSSOF sont le Mardi (7-8), Mercredi (1-2) et Vendredi (3-4).";
+        else if (q.includes("svt")) reply = "Les cours de SVT avec M. FATH sont le Lundi (7-8) et le Jeudi (3-4).";
+        else if (q.includes("pc") || q.includes("physique")) reply = "La Physique-Chimie avec M. MAIZI est programmée le Mardi (3-4) et le Mercredi (7-8).";
+        else if (q.includes("français") || q.includes("francais")) reply = "Le Français avec Mme ETTAYBI a lieu le Lundi (3-4), Mardi (1-2) et Mercredi (5-6).";
         
         windowEl.innerHTML += `
-          <div style="background:rgba(99,102,241,0.15); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%;">
-            <strong>Ihouf AI:</strong> ${reply}
+          <div style="background:rgba(0, 114, 229, 0.18); border: 1px solid var(--card-border); padding:0.75rem 1rem; border-radius:10px; margin-bottom:0.5rem; max-width:80%;">
+            <strong>Hassan AI:</strong> ${reply}
           </div>
         `;
         windowEl.scrollTop = windowEl.scrollHeight;
-      }, 500);
+      }, 400);
 
       input.value = "";
     }
